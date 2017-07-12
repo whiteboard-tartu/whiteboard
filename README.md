@@ -24,9 +24,6 @@ TBD - Describe and show how to run the tests with code examples.
 
 ## Contributors
 
-Currently kool is managed by Geraldine Granada and Antony Orenge, graduate students at the University of Tartu, Estonia.
-
 #### Geraldine King Granada [Software Engineering Group] (geraldine.granada@ut.ee) 
 #### Antony Oroko Orenge [Software Engineering Group] (orenge@ut.ee)
-
-#### Supervised by Benson Muite [Distributed Systems Group] (benson.muite@ut.ee)
+#### Benson Muite [Distributed Systems Group] (benson.muite@ut.ee)
