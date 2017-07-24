@@ -30,6 +30,7 @@ TBD - Describe and show how to run the tests with code examples.
 * [OpenEDX](https://github.com/edx/edx-platform)
 * [OpenSWAD](https://openswad.org/)
 * [Privacy preserving data publishing](https://github.com/rain1/Privacy-Preserving-Data-Publishing)
+* [Pygrades](https://bitbucket.org/jjauhien/pygrades)
 * [List on Wikipedia](https://en.wikipedia.org/wiki/List_of_learning_management_systems)
 
 ## Contributors
