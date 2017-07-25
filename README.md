@@ -22,8 +22,19 @@ TBD - Depending on the size of the project, if it is small and simple enough the
 
 TBD - Describe and show how to run the tests with code examples.
 
+## Related projects
+* [Blackboard](http://www.blackboard.com/) 
+* [Canvas](https://www.canvaslms.com/)
+* [Chamilo](https://chamilo.org/es/)
+* [Moodle](https://moodle.org/)
+* [OpenEDX](https://github.com/edx/edx-platform)
+* [OpenSWAD](https://openswad.org/)
+* [Privacy preserving data publishing](https://github.com/rain1/Privacy-Preserving-Data-Publishing)
+* [Pygrades](https://bitbucket.org/jjauhien/pygrades)
+* [List on Wikipedia](https://en.wikipedia.org/wiki/List_of_learning_management_systems)
+
 ## Contributors
 
 #### Geraldine King Granada [Software Engineering Group] (geraldine.granada@ut.ee) 
 #### Antony Oroko Orenge [Software Engineering Group] (orenge@ut.ee)
-#### Benson Muite [Distributed Systems Group] (benson.muite@ut.ee)
+#### Benson Muite
