@@ -8,8 +8,24 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class TestFlatFile(object):
 
+	@classmethod
+	def setup_class(cls):
+		cls.file = FlatFile()
+
 	def test_get_permissions(self):
-		file = FlatFile()
 		filename = '{}/fixtures/users.csv'.format(TEST_DIR)
-		result = file.get_permissions(filename)		
+		result = self.file.get_permissions(filename)
 		assert isinstance(result, tuple), 'Should return a tuple'
+		assert isinstance(result[0], list), 'First item should be a list'
+		assert isinstance(result[1], dict), 'Last item should be a dict'
+
+	def test_add_user(self):
+		username = 'johndoe'
+		realname = 'John Doe'
+		password = 'test_pwd'
+		permissions = 'student'
+		filename = '{}/fixtures/users.csv'.format(TEST_DIR)
+		self.file.add_user(username, realname, password, 
+			permissions, filename)
+		result = self.file.get_permissions(filename)
+		assert 'johndoe' in result[1] == True 
