@@ -5,7 +5,7 @@ A base quiz class, providing some default behaviours that all
 quiz types can inherit or override, as necessary.
 """
 
-class Quiz:
+class Quiz(object):
 
 	def create(self):
 		pass

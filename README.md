@@ -33,8 +33,5 @@ TBD - Describe and show how to run the tests with code examples.
 * [Pygrades](https://bitbucket.org/jjauhien/pygrades)
 * [List on Wikipedia](https://en.wikipedia.org/wiki/List_of_learning_management_systems)
 
-## Contributors
-
-#### Geraldine King Granada [Software Engineering Group] (geraldine.granada@ut.ee) 
-#### Antony Oroko Orenge [Software Engineering Group] (orenge@ut.ee)
-#### Benson Muite
+## License
+Kool is licensed under MIT License
