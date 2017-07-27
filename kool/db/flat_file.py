@@ -6,6 +6,7 @@ based on encode_grades.py available at
 https://bitbucket.org/jjauhien/pygrades/src/
 
 Other references:
+https://jeffknupp.com/blog/2014/09/01/what-is-a-nosql-database-learn-by-writing-one-in-python/
 http://www.python-course.eu/python3_dictionaries.php
 http://www.tutorialspoint.com/python/python_dictionary.htm
 """
@@ -43,13 +44,13 @@ class FlatFile(object):
                 else:
                     f.close()
                     f = open(filename,'w+')
-                    f.write(username + ' , ' +realname +' , ' + password + ' , ' + permissions + ' \n')
+                    f.write(username + ', ' +realname +', ' + password + ', ' + permissions)
                     f.close()
                     return None
             else:
                 f = open(filename,'w')
-                f.write('Username, Real name, password, permissions \n')
-                f.write(username + ' , ' +realname +' , ' + password + ' , ' + permissions + ' \n')
+                f.write('Username, Real name, password, permissions')
+                f.write(username + ', ' +realname +', ' + password + ', ' + permissions)
                 f.close()
                 return None
         except IOError:
@@ -81,7 +82,7 @@ class FlatFile(object):
                   f.write(header)
                   for key in users:
                       realname, password, permissions = users[key]
-                      f.write(key + ' , ' + realname + ' , ' + password + ' , ' + permissions + ' /n')
+                      f.write(key + ', ' + realname + ', ' + password + ', ' + permissions)
                   f.close()
                   return None
         except IOError:
