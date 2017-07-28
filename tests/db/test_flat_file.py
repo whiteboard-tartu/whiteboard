@@ -37,4 +37,8 @@ class TestFlatFile(object):
 		self.file.delete_user(username, filename)
 		result = self.file.get_permissions(filename)
 
-		assert result[1]['johndoe'] == None
+		expected = {'ao': ('Antony Orenge', 'aopwd', 'teacher \n'), 
+					'bm': ('Benson Muite', 'bmpwd', 'student\n'), 
+					'gg': ('Geraldine Granada', 'ggpwd', 'teacher\n')}
+		assert len(result[1]) == 3
+		assert result[1] == expected
