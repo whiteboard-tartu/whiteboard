@@ -43,7 +43,7 @@ class FlatFile(object):
                      return None
                 else:
                     f.close()
-                    f = open(filename,'w+')
+                    f = open(filename,'wa')
                     f.write(username + ', ' +realname +', ' + password + ', ' + permissions)
                     f.close()
                     return None
