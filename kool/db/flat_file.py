@@ -57,12 +57,12 @@ class FlatFile(object):
             print('Error while opening file {0:s}'.format(filename))
             return None
           
-    def delete_user(self, usernamedel, filename):
+    def delete_user(self, username, filename):
         try:
             if os.path.isfile(filename):
                f = open(filename,'r')
                content = f.read()
-               if content.find(usernamedel) !=-1:
+               if content.find(username) != -1:
                    print('That username does not exist')
                    return None
                else:
@@ -75,14 +75,14 @@ class FlatFile(object):
                       realname = vals[1]
                       password = vals[2]
                       permissions = vals[3]
-                      if usernamedel != username:
+                      if username != username:
                           users[username] = (realname, password, permissions)
                   f.close()
                   f = open(filename,'w')
                   f.write(header)
                   for key in users:
                       realname, password, permissions = users[key]
-                      f.write(key + ', ' + realname + ', ' + password + ', ' + permissions)
+                      f.write(key + ',' + realname + ',' + password + ',' + permissions)
                   f.close()
                   return None
         except IOError:

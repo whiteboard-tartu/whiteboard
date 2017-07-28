@@ -29,3 +29,12 @@ class TestFlatFile(object):
 			permissions, filename)
 		result = self.file.get_permissions(filename)
 		assert result[1]['johndoe'] == (realname, password, permissions) 
+
+	def test_delete_user(self):
+		username = 'johndoe'
+		filename = '{}/fixtures/users.csv'.format(TEST_DIR)
+
+		self.file.delete_user(username, filename)
+		result = self.file.get_permissions(filename)
+
+		assert result[1]['johndoe'] == None
