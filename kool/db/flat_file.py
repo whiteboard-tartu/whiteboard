@@ -12,6 +12,8 @@ http://www.tutorialspoint.com/python/python_dictionary.htm
 """
 import os
 import csv 
+from kool.core.exceptions import UserNotFound
+
 
 class FlatFile(object):
 
@@ -59,13 +61,24 @@ class FlatFile(object):
             return None
           
     def delete_user(self, username, filename):
+        """"
+        Deletes user specified by username in the provided file
+        """
         try:
             if os.path.isfile(filename):
                 reader = csv.reader(open(filename, 'rt'), delimiter=',')
                 users = []
+                user_found = False
+
                 for row in reader:
                     if row[0] != username:
                         users.append(row)
+                    else:
+                        user_found = True
+
+                if not user_found:
+                    raise UserNotFound
+
                 f = csv.writer(open(filename, 'wt'))
                 for user in users:
                     f.writerow(user)
