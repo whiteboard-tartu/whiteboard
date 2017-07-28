@@ -28,4 +28,4 @@ class TestFlatFile(object):
 		self.file.add_user(username, realname, password, 
 			permissions, filename)
 		result = self.file.get_permissions(filename)
-		assert 'johndoe' in result[1] == True 
+		assert result[1]['johndoe'] == (realname, password, permissions) 

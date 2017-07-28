@@ -43,14 +43,14 @@ class FlatFile(object):
                      return None
                 else:
                     f.close()
-                    f = open(filename,'wa')
-                    f.write(username + ', ' +realname +', ' + password + ', ' + permissions)
+                    f = open(filename,'a')
+                    f.write(username + ',' + realname + ',' + password + ',' + permissions)
                     f.close()
                     return None
             else:
                 f = open(filename,'w')
                 f.write('Username, Real name, password, permissions')
-                f.write(username + ', ' +realname +', ' + password + ', ' + permissions)
+                f.write(username + ',' + realname + ',' + password + ',' + permissions)
                 f.close()
                 return None
         except IOError:
