@@ -12,7 +12,14 @@ Currently, teachers who manage online classes use several tools with different p
 
 ## Installation
 
-TBD - Provide code examples and explanations of how to get the project.
+Start by setting up a virtual environment. See [Virtual Environments Tutorial](http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/)
+
+Once you're done, run: 
+
+```
+pip install -U pip
+pip install -r requirements.txt
+```
 
 ## API Reference
 
@@ -20,7 +27,11 @@ TBD - Depending on the size of the project, if it is small and simple enough the
 
 ## Tests
 
-TBD - Describe and show how to run the tests with code examples.
+Run test by running:
+
+```
+pytest tests/
+```
 
 ## Related projects
 * [Blackboard](http://www.blackboard.com/) 
