@@ -11,6 +11,9 @@ http://www.python-course.eu/python3_dictionaries.php
 http://www.tutorialspoint.com/python/python_dictionary.htm
 """
 import os
+import csv 
+from kool.core.exceptions import UserNotFound
+
 
 class FlatFile(object):
 
@@ -58,33 +61,28 @@ class FlatFile(object):
             return None
           
     def delete_user(self, username, filename):
+        """"
+        Deletes user specified by username in the provided file
+        """
         try:
             if os.path.isfile(filename):
-               f = open(filename,'r')
-               content = f.read()
-               if content.find(username) != -1:
-                   print('That username does not exist')
-                   return None
-               else:
-                  f.seek(0)
-                  header = f.readline()
-                  users = dict()
-                  for line in f:
-                      vals = line.split(',')
-                      username = vals[0]
-                      realname = vals[1]
-                      password = vals[2]
-                      permissions = vals[3]
-                      if username != username:
-                          users[username] = (realname, password, permissions)
-                  f.close()
-                  f = open(filename,'w')
-                  f.write(header)
-                  for key in users:
-                      realname, password, permissions = users[key]
-                      f.write(key + ',' + realname + ',' + password + ',' + permissions)
-                  f.close()
-                  return None
+                reader = csv.reader(open(filename, 'rt'), delimiter=',')
+                users = []
+                user_found = False
+
+                for row in reader:
+                    if row[0] != username:
+                        users.append(row)
+                    else:
+                        user_found = True
+
+                if not user_found:
+                    raise UserNotFound
+
+                f = csv.writer(open(filename, 'wt'))
+                for user in users:
+                    f.writerow(user)
+                return None
         except IOError:
             print('Error while opening file {0:s}'.format(filename))
             return None

@@ -2,6 +2,7 @@ import os
 import sys
 import pytest
 from kool.db.flat_file import FlatFile
+from kool.core.exceptions import UserNotFound
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -35,6 +36,17 @@ class TestFlatFile(object):
 		filename = '{}/fixtures/users.csv'.format(TEST_DIR)
 
 		self.file.delete_user(username, filename)
+		
 		result = self.file.get_permissions(filename)
+		expected = {'ao': ('Antony Orenge', 'aopwd', 'teacher \n'), 
+					'bm': ('Benson Muite', 'bmpwd', 'student\n'), 
+					'gg': ('Geraldine Granada', 'ggpwd', 'teacher\n')}
+		assert len(result[1]) == 3
+		assert result[1] == expected
 
-		assert result[1]['johndoe'] == None
+	def test_delete_user_raises_exception(self):
+		username = 'marydoe'
+		filename = '{}/fixtures/users.csv'.format(TEST_DIR)
+
+		with pytest.raises(UserNotFound):
+			self.file.delete_user(username, filename)
