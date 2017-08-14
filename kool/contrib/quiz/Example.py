@@ -4,6 +4,7 @@
 # http://www.techteachers.co.za/2015/07/multiple-choice-quiz-using-python/
 # http://wsgi.tutorial.codepoint.net/
 # https://www.w3schools.com/html/html_forms.asp
+# https://github.com/karanveerm/quizgen
 
 from wsgiref.simple_server import make_server
 from cgi import parse_qs, escape
