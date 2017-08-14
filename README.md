@@ -33,6 +33,14 @@ Run test by running:
 pytest tests/
 ```
 
+## Test Coverage
+
+Test coverage is covered by coverage and pytest-cov tools. The output report is in html format under htmlcov/dir.
+
+## Continuous Integration 
+
+TBD
+
 ## Related projects
 * [Blackboard](http://www.blackboard.com/) 
 * [Canvas](https://www.canvaslms.com/)
