@@ -37,11 +37,14 @@ pytest tests/
 * [Blackboard](http://www.blackboard.com/) 
 * [Canvas](https://www.canvaslms.com/)
 * [Chamilo](https://chamilo.org/es/)
+* [Gibbon](https://gibbonedu.org)
 * [Moodle](https://moodle.org/)
+* [Omeka](http://omeka.org/)
 * [OpenEDX](https://github.com/edx/edx-platform)
 * [OpenSWAD](https://openswad.org/)
 * [Privacy preserving data publishing](https://github.com/rain1/Privacy-Preserving-Data-Publishing)
 * [Pygrades](https://bitbucket.org/jjauhien/pygrades)
+* [Xerte](http://xerte.org.uk)
 * [List on Wikipedia](https://en.wikipedia.org/wiki/List_of_learning_management_systems)
 
 ## License
