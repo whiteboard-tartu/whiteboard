@@ -3,8 +3,25 @@
 This class represents questions that make up a quiz
 """
 
-class Quiz(object):
-	"""docstring for Quiz"""
-	def __init__(self, arg):
-		super(Quiz, self).__init__()
-		self.arg = arg
+class Question(object):
+	
+	_questions = []
+
+	def __init__(self, question, quiz):
+		super().__init__()
+		self.question = question
+		self.quiz = quiz
+		self.choices = {}
+		self.answer = {}
+		_questions.append(self)
+
+	def questions(self):
+		return self._questions
+
+	def set_answer(self, answer):
+		self.answer[self] = [answer]
+		return self.answer
+
+	def set_choices(self, choice):
+		pass
+		

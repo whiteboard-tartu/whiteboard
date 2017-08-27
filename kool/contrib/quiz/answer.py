@@ -4,7 +4,11 @@ This class represents answers to a question
 """
 
 class Answer(object):
-	"""docstring for Answer"""
-	def __init__(self, arg):
-		super(Answer, self).__init__()
-		self.arg = arg
+
+	_answers = []
+
+	def __init__(self, student, answer):
+		super().__init__()
+		self.student = student
+		self.answer = answer
+
