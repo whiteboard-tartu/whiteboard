@@ -1,4 +1,5 @@
 import datetime
+from decimal import Decimal
 
 _PROTECTED_TYPES = (
     type(None), int, float, Decimal, datetime.datetime, datetime.date, datetime.time,

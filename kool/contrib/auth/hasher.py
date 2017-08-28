@@ -2,6 +2,7 @@ import binascii
 import hashlib
 import importlib
 import warnings
+import functools
 from collections import OrderedDict
 
 from kool.utils.crypto import constant_time_compare, get_random_string
@@ -90,7 +91,6 @@ def get_hashers_by_algorithm():
     return {hasher.algorithm: hasher for hasher in get_hashers()}
 
 
-@receiver(setting_changed)
 def reset_hashers(**kwargs):
     if kwargs['setting'] == 'PASSWORD_HASHERS':
         get_hashers.cache_clear()

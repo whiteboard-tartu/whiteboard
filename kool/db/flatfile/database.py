@@ -208,7 +208,7 @@ class FlatFileDB(object):
         """
         Increment the ID used the last time and return it.
         """
-        current_id = self._last_id + 1
+        current_id = int(self._last_id) + 1
         self._last_id = current_id
 
         return current_id
@@ -243,6 +243,7 @@ class Table(object):
         """
         self._storage = storage
         self._query_cache = LRUCache(capacity=cache_size)
+        self.name = self._storage._table_name
 
         data = self._read()
         if data:
@@ -251,7 +252,7 @@ class Table(object):
             self._last_id = 0
 
     def __str__(self):
-        return '{}'.format(self._storage._table_name)
+        return '{}'.format(self.name)
 
     def process_elements(self, func, cond=None, eids=None):
         """

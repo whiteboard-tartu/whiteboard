@@ -124,9 +124,11 @@ class CSVStorage(Storage):
             break
 
         if data and frow:
-            header = {'_id'}  # initialize header set with _id
-            header.update(set(list(frow.keys())))
-            
+            header_set = {'_id'}  # initialize header set with _id
+            header_set.update(set(list(frow.keys())))
+            header = list(header_set)
+            header.sort()
+
             csvwriter = csv.DictWriter(self._handle, delimiter=',', 
                 fieldnames=header)
             csvwriter.writeheader()

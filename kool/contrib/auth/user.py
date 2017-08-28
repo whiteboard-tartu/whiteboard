@@ -1,22 +1,19 @@
-from kool.db import FlatFileDB
+from kool.db.models import Model
 from kool.contrib.auth.hasher import make_password, check_password
 
 
-class User(FlatFileDB):
+class User(Model):
     """Base class for users"""
-   
     
     def __init__(self, * args, **kwargs):
         super().__init__()
-    	self.email = kwargs['email']
+        self.email = kwargs['email']
         self.password = kwargs['password']
         self.first_name = kwargs['first_name']
         self.last_name = kwargs['last_name']
-        self.last_login = kwargs['last_login']
-        self.date_joined = kwargs['date_joined']
         self.is_active = True
         self._groups = []
-    	self._permissions = []
+        self._permissions = []
 
     def set_password(self, raw_password):
         """Return encoded password"""
@@ -36,9 +33,9 @@ class User(FlatFileDB):
 
     @groups.setter
     def groups(self, group):
-    	if not group in self._groups:
-    		self._groups.append(group)
-    	return self._groups
+        if not group in self._groups:
+            self._groups.append(group)
+        return self._groups
 
     @property
     def permissions(self):
@@ -46,12 +43,12 @@ class User(FlatFileDB):
 
     @permissions.setter
     def permissions(self, perm):
-    	if not perm in self._permissions:
-    		self._permissions.append(perm)
-    	return self._permissions
+        if not perm in self._permissions:
+            self._permissions.append(perm)
+        return self._permissions
 
     def has_perm(self, perm):
-    	return True if perm in self._permissions else False
+        return True if perm in self._permissions else False
 
     def get_full_name(self):
         full_name = '{} {}'.format(self.first_name, self.last_name)
