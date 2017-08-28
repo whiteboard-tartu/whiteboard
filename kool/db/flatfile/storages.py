@@ -114,8 +114,6 @@ class CSVStorage(Storage):
 
     def write(self, data):
         self._handle.seek(0)
-        
-        # data = file[filename]
         frow = None
         
         # Retrieve column names from first record
@@ -138,6 +136,10 @@ class CSVStorage(Storage):
             
             self._handle.flush()
             self._handle.truncate()
+
+    def purge(self):
+        self._handle.seek(0)
+        self._handle.truncate()
 
     def close(self):
         self._handle.close()

@@ -62,11 +62,8 @@ class StorageProxy(object):
         data = self._table.read() or {}
         self._table.write(values)
 
-    def purge_table(self):
-        try:
-            self._table.write({})
-        except KeyError:
-            pass
+    def purge(self):
+        self._table.purge()
 
     def close(self):
         self._opened = False
@@ -191,7 +188,7 @@ class FlatFileDB(object):
             del self._table_cache[name]
 
         proxy = StorageProxy(FlatFileDB, name)
-        proxy.purge_table()
+        proxy.purge()
 
     def close(self):
         self._opened = False
@@ -439,7 +436,7 @@ class Table(object):
     
     def purge(self):
         """Purge the table by removing all elements"""
-        self._write({})
+        self._storage.purge()
         self._last_id = 0
 
     def filter(self, cond):
