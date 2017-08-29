@@ -1,7 +1,7 @@
-from kool.db import FlatFileDB
+from kool.db.models import Model
 
 
-class Course(FlatFileDB):
+class Course(Model):
 	"""Course describes a plan of study for a student"""
 	
 	_courses = {}
@@ -12,14 +12,8 @@ class Course(FlatFileDB):
 		self.description = ''
 		self.instructor = None
 
-	def save(self, *args, **kwargs):
-		pass
 
-	def delete(self, *args, **kwargs):
-		pass
-
-
-class Topic(FlatFileDB):
+class Topic(Model):
 	"""These are topics that constitute a course"""
 
 	_topics = {}
@@ -30,9 +24,3 @@ class Topic(FlatFileDB):
 		self.description = description
 		self.file = file
 		self.course = course
-
-	def save(self):
-		pass
-
-	def delete(self):
-		pass

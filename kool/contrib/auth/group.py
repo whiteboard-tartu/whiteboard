@@ -1,6 +1,6 @@
-from kool.db import FlatFileDB
+from kool.db.models import Model
 
-class Group(FlatFileDB):
+class Group(Model):
 	"""Groups are used to cluster similar users."""
 	
 	_groups = {}
@@ -9,12 +9,6 @@ class Group(FlatFileDB):
 		super().__init__()
 		self._name = name
 		self._permissions = []
-
-	def save(self):
-		pass
-
-	def delete(self):
-		pass
 
 	@property
 	def permissions(self):

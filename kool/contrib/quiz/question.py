@@ -1,9 +1,12 @@
-"""Question
+"""
+Question
 
 This class represents questions that make up a quiz
 """
+from kool.db.models import Model
 
-class Question(object):
+
+class Question(Model):
 	
 	_questions = []
 

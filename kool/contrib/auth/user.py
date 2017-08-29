@@ -12,8 +12,8 @@ class User(Model):
         self.first_name = kwargs['first_name']
         self.last_name = kwargs['last_name']
         self.is_active = True
-        self._groups = []
-        self._permissions = []
+        self.groups = []
+        self.permissions = []
 
     def set_password(self, raw_password):
         """Return encoded password"""
@@ -27,25 +27,15 @@ class User(Model):
 
         return check_password(raw_password, self.password, setter) 
 
-    @property
-    def groups(self):
-        return self._groups
+    def add_groups(self, group):
+        if not group in self.groups:
+            self.groups.append(group)
+        return self.groups
 
-    @groups.setter
-    def groups(self, group):
-        if not group in self._groups:
-            self._groups.append(group)
-        return self._groups
-
-    @property
-    def permissions(self):
-        return self._permissions
-
-    @permissions.setter
-    def permissions(self, perm):
-        if not perm in self._permissions:
-            self._permissions.append(perm)
-        return self._permissions
+    def add_permissions(self, perm):
+        if not perm in self.permissions:
+            self.permissions.append(perm)
+        return self.permissions
 
     def has_perm(self, perm):
         return True if perm in self._permissions else False
