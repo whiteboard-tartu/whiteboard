@@ -52,6 +52,8 @@ class Model(object):
         # Get objects dict
         data = self.props()
 
+        print(data)
+        
         # Fetch exising object
         obj = self._table.get(eid=self._id) if self._id else None
         

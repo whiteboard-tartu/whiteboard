@@ -18,6 +18,7 @@ class User(Model):
     def set_password(self, raw_password):
         """Return encoded password"""
         self.password = make_password(raw_password)
+        print(self.password)
 
     def check_password(self, raw_password):
         """Checks if the password matches correctly"""
