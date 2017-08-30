@@ -1,4 +1,4 @@
-from .flatfile import FlatFileDB
+from .flatfile import FlatFileDB, Query
 from kool.utils import camel_to_snake, now
 
 
@@ -95,3 +95,7 @@ class Model(object):
         Forward all unknown attribute calls to the underlying standard table.
         """
         return getattr(self._table, name)
+
+
+def where(key):
+    return Query()[key]
