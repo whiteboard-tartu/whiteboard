@@ -52,8 +52,6 @@ class Model(object):
         # Get objects dict
         data = self.props()
 
-        print(data)
-        
         # Fetch exising object
         obj = self._table.get(eid=self._id) if self._id else None
         
@@ -64,12 +62,12 @@ class Model(object):
         
         return self._id
 
-    def delete(self, * args):
+    def delete(self, cond=None, eids=None, * args):
         eids = []
 
-        eids = list(args) or ([self._id,] if self._id else [])
+        eids = ([self._id,] if self._id else []) or eids or list(args)
         if eids:
-            self._table.remove(eids=eids)
+            self._table.remove(cond=cond, eids=eids)
         else:
             raise ValueError('Object must be saved to delete')
 
