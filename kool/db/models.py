@@ -89,3 +89,9 @@ class Model(object):
             (key, value) 
             for (key, value) in self.__dict__.items() 
             if not (key.startswith('_') or key.startswith('__')))
+
+    def __getattr__(self, name):
+        """
+        Forward all unknown attribute calls to the underlying standard table.
+        """
+        return getattr(self._table, name)
