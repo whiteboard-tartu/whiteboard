@@ -30,11 +30,36 @@ class Model(object):
         self.last_modified = '{}'.format(now())
         if not self.date_created:
             self.date_created = '{}'.format(now())
-        # get objects dict
+        
+        # Get objects dict
         data = self.props()
 
-        # dumps dict to database
-        self._id = self._table.insert(data)
+        if data:
+            # Creates a new instance
+            self._id = self._table.insert(data)
+
+        return self._id
+
+    def update(self, * args, ** kwargs):
+        """
+        Update method provides a way of updating the values of an object.
+        """
+        data = {}
+        self.last_modified = '{}'.format(now())
+        if not self.date_created:
+            self.date_created = '{}'.format(now())
+        
+        # Get objects dict
+        data = self.props()
+
+        # Fetch exising object
+        obj = self._table.get(eid=self._id) if self._id else None
+        
+        if obj and data:
+            # Updates an existing instance
+            ids = self._table.update(data, eids=[self._id])
+            self._id = ids[0]
+        
         return self._id
 
     def delete(self, * args):
