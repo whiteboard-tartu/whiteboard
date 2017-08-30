@@ -143,7 +143,10 @@ class FlatFileDB(object):
 
         self._table_cache[name] = self._table
 
+        self._tables = self.tables()
+
         self._tables[self._get_next_id()] = {'table': name}
+        
         FlatFileDB._database.write(self._tables)
         
         return self._table
@@ -170,13 +173,13 @@ class FlatFileDB(object):
 
     def tables(self):
         """
-        Get a list of table objects.
+        Get a dict of table objects.
         
         Returns:
-            [set[Table]] -- a set of table names
+            dict -- a dictionary of all tables with ids
         """
         # return set(self._storage.read()) if self._storage.read() else None
-        return self._tables
+        return FlatFileDB._database.read() or {}
 
     def purge_table(self, name):
         """Purge a specific table from the database. **CANNOT BE REVERSED!**
