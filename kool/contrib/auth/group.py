@@ -1,21 +1,19 @@
 from kool.db.models import Model
 
 class Group(Model):
-	"""Groups are used to cluster similar users."""
-	
-	_groups = {}
+	"""
+	Groups are used to cluster similar users.
+
+	Extends:
+		Model
+	"""
 
 	def __init__(self, name):
 		super().__init__()
-		self._name = name
-		self._permissions = []
+		self.name = name
+		self.permissions = []
 
-	@property
-	def permissions(self):
-		return self._permissions
-
-	@permissions.setter
-	def permissions(self, perm):
-		if not perm in self._permissions:
-			self._permissions.append(perm)
+	def add_permissions(self, perm):
+		if not perm in self.permissions:
+			self.permissions.append(perm)
 
