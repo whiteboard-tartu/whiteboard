@@ -74,8 +74,8 @@ class Query(object):
     1) ORM-like usage:
 
     >>> User = Query()
-    >>> db.search(User.name == 'John Doe')
-    >>> db.search(User['logged-in'] == True)
+    >>> db.filter(User.name == 'John Doe')
+    >>> db.filter(User['logged-in'] == True)
 
     2) Classical usage:
 
@@ -249,17 +249,17 @@ class Query(object):
         return self._generate_test(lambda value: re.match(regex, value),
                                    ('matches', tuple(self._path), regex))
 
-    def search(self, regex):
+    def filter(self, regex):
         """
         Run a regex test against a dict value (only substring string has to
         match).
 
-        >>> Query().f1.search(r'^\w+$')
+        >>> Query().f1.filter(r'^\w+$')
 
         :param regex: The regular expression to use for matching
         """
-        return self._generate_test(lambda value: re.search(regex, value),
-                                   ('search', tuple(self._path), regex))
+        return self._generate_test(lambda value: re.filter(regex, value),
+                                   ('filter', tuple(self._path), regex))
 
     def test(self, func, *args):
         """
