@@ -1,3 +1,7 @@
+"""
+Encoding utility functions derived from django's encoding.py 
+Credit: https://github.com/django/django
+"""
 import datetime
 from decimal import Decimal
 

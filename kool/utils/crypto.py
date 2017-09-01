@@ -1,3 +1,7 @@
+"""
+Crypto utility functions derived from django's crypto.py 
+Credit: https://github.com/django/django
+"""
 import hashlib
 import random
 import time

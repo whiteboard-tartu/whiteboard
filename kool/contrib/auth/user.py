@@ -8,7 +8,7 @@ class User(Model):
     def __init__(self, * args, **kwargs):
         super().__init__()
         self.email = kwargs['email']
-        self.password = kwargs['password']
+        self.password = self.set_password(kwargs['password'])
         self.first_name = kwargs['first_name']
         self.last_name = kwargs['last_name']
         self.is_active = True
@@ -17,8 +17,7 @@ class User(Model):
 
     def set_password(self, raw_password):
         """Return encoded password"""
-        self.password = make_password(raw_password)
-        print(self.password)
+        return make_password(raw_password)
 
     def check_password(self, raw_password):
         """Checks if the password matches correctly"""

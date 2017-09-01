@@ -1,8 +1,11 @@
+"""
+Hasher functions derived from django's password hashers.py 
+Credit: https://github.com/django/django
+"""
 import binascii
 import hashlib
 import importlib
 import warnings
-import functools
 from collections import OrderedDict
 
 from kool.utils.crypto import constant_time_compare, get_random_string
@@ -13,17 +16,12 @@ UNUSABLE_PASSWORD_PREFIX = '!'  # This will never be a valid encoded hash
 UNUSABLE_PASSWORD_SUFFIX_LENGTH = 40  # number of random chars to add after UNUSABLE_PASSWORD_PREFIX
 
 
-def is_password_usable(encoded):
-    if encoded is None or encoded.startswith(UNUSABLE_PASSWORD_PREFIX):
-        return False
-    try:
-        identify_hasher(encoded)
-    except ValueError:
-        return False
-    return True
+def get_hasher():
+    """Returns default hasher. To be extended to support multiple hashers."""
+    return BCryptSHA256PasswordHasher()
 
 
-def check_password(password, encoded, setter=None, preferred='default'):
+def check_password(password, encoded, setter=None):
     """
     Return a boolean of whether the raw password matches the three
     part encoded digest.
@@ -31,24 +29,11 @@ def check_password(password, encoded, setter=None, preferred='default'):
     If setter is specified, it'll be called when you need to
     regenerate the password.
     """
-    if password is None or not is_password_usable(encoded):
-        return False
+    hasher = get_hasher()
 
-    preferred = get_hasher(preferred)
-    hasher = identify_hasher(encoded)
-
-    hasher_changed = hasher.algorithm != preferred.algorithm
-    must_update = hasher_changed or preferred.must_update(encoded)
     is_correct = hasher.verify(password, encoded)
 
-    # If the hasher didn't change (we don't protect against enumeration if it
-    # does) and the password should get updated, try to close the timing gap
-    # between the work factor of the current encoded password and the default
-    # work factor.
-    if not is_correct and not hasher_changed and must_update:
-        hasher.harden_runtime(password, encoded)
-
-    if setter and is_correct and must_update:
+    if setter and is_correct:
         setter(password)
     return is_correct
 
@@ -65,80 +50,12 @@ def make_password(password, salt=None, hasher='default'):
     if password is None:
         return UNUSABLE_PASSWORD_PREFIX + get_random_string(UNUSABLE_PASSWORD_SUFFIX_LENGTH)
     
-    hasher = BCryptSHA256PasswordHasher()
+    hasher = get_hasher()
 
     if not salt:
         salt = hasher.salt()
 
     return hasher.encode(password, salt)
-
-
-@functools.lru_cache()
-def get_hashers():
-    hashers = []
-    for hasher_path in settings.PASSWORD_HASHERS:
-        hasher_cls = import_string(hasher_path)
-        hasher = hasher_cls()
-        if not getattr(hasher, 'algorithm'):
-            raise ImproperlyConfigured("hasher doesn't specify an "
-                                       "algorithm name: %s" % hasher_path)
-        hashers.append(hasher)
-    return hashers
-
-
-@functools.lru_cache()
-def get_hashers_by_algorithm():
-    return {hasher.algorithm: hasher for hasher in get_hashers()}
-
-
-def reset_hashers(**kwargs):
-    if kwargs['setting'] == 'PASSWORD_HASHERS':
-        get_hashers.cache_clear()
-        get_hashers_by_algorithm.cache_clear()
-
-
-def get_hasher(algorithm='default'):
-    """
-    Return an instance of a loaded password hasher.
-
-    If algorithm is 'default', return the default hasher. Lazily import hashers
-    specified in the project's settings file if needed.
-    """
-    if hasattr(algorithm, 'algorithm'):
-        return algorithm
-
-    elif algorithm == 'default':
-        return get_hashers()[0]
-
-    else:
-        hashers = get_hashers_by_algorithm()
-        try:
-            return hashers[algorithm]
-        except KeyError:
-            raise ValueError("Unknown password hashing algorithm '%s'. "
-                             "Did you specify it in the PASSWORD_HASHERS "
-                             "setting?" % algorithm)
-
-
-def identify_hasher(encoded):
-    """
-    Return an instance of a loaded password hasher.
-
-    Identify hasher algorithm by examining encoded hash, and call
-    get_hasher() to return hasher. Raise ValueError if
-    algorithm cannot be identified, or if hasher is not loaded.
-    """
-    # Ancient versions of Django created plain MD5 passwords and accepted
-    # MD5 passwords with an empty salt.
-    if ((len(encoded) == 32 and '$' not in encoded) or
-            (len(encoded) == 37 and encoded.startswith('md5$$'))):
-        algorithm = 'unsalted_md5'
-    # Ancient versions of Django accepted SHA1 passwords with an empty salt.
-    elif len(encoded) == 46 and encoded.startswith('sha1$$'):
-        algorithm = 'unsalted_sha1'
-    else:
-        algorithm = encoded.split('$', 1)[0]
-    return get_hasher(algorithm)
 
 
 def mask_hash(hash, show=6, char="*"):
