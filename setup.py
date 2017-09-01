@@ -25,7 +25,7 @@ setup(
     keywords="education learning database nosql",
     url="https://github.com/edasi/kool",
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Intended Audience :: Instructors",
         "License :: OSI Approved :: MIT License",
