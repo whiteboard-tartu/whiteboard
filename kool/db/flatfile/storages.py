@@ -1,7 +1,6 @@
 import os
 import csv
 from abc import ABCMeta, abstractmethod
-from os.path import basename
 
 from .utils import with_metaclass, touch, mkdir
 
@@ -59,7 +58,6 @@ class CSVStorage(Storage):
     """
     Store the data in a CSV file.
     """
-
     def __init__(self, path, init_db=True, create_dirs=False, **kwargs):
         """
         Create a new csv storage instance.
@@ -67,7 +65,7 @@ class CSVStorage(Storage):
         Also creates the storage file, if it doesn't exist.
 
         Arguments:
-            path {str} -- Where to store the JSON data.
+            path {str} -- Where to store the data.
             **kwargs -- extra options
         
         Keyword Arguments:
@@ -80,11 +78,10 @@ class CSVStorage(Storage):
         # Initialize database
         if init_db:
             self.path = os.path.dirname(path)
-        #     mkdir(self.path)
-        #     return
 
-        base = basename(path)
+        base = os.path.basename(path)
         base_ext = os.path.splitext(base)[1]
+
         if not base_ext:
             path += '.csv'
 

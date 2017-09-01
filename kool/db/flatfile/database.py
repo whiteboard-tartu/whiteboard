@@ -89,19 +89,21 @@ class FlatFileDB(object):
     _storage = None
     _database = None
 
-    def __init__(self, name=DEFAULT_DB, **options):
+    def __init__(self, name=DEFAULT_DB, *args, **kwargs):
         """
         Create a new database.
         
         All arguments and keyword arguments will be passed to the underlying
         storage class
         """
-        self.name = name
+        
+        # supports first argument as database name
+        self.name = name or (args[0] if args else None)
 
-        storage = options.pop('storage', FlatFileDB.DEFAULT_STORAGE)
-        table = options.pop('default_table', FlatFileDB.DEFAULT_TABLE)
-        db_path = os.path.join(PROJECT_ROOT, self.name)
-        # path = options.pop('path', os.path.join(DB_PATH, table))
+        storage = kwargs.pop('storage', FlatFileDB.DEFAULT_STORAGE)
+        table = kwargs.pop('default_table', FlatFileDB.DEFAULT_TABLE)
+        default_path = os.path.join(PROJECT_ROOT, self.name)
+        path = kwargs.pop('path', default_path)
 
         # Prepare the storage 
         self._opened = True
@@ -110,8 +112,8 @@ class FlatFileDB(object):
         FlatFileDB._storage = storage
 
         # Create database
-        FlatFileDB._database = storage(os.path.join(db_path, '.meta'), 
-            init_db=True, create_dirs=True, **options)
+        FlatFileDB._database = storage(os.path.join(path, '.meta'), 
+            init_db=True, create_dirs=True, **kwargs)
         
         self._table_cache = {}
         
@@ -125,25 +127,30 @@ class FlatFileDB(object):
         else:
             self._last_id = 0
 
-    def create_table(self, name=DEFAULT_TABLE, **options):
+    def create_table(self, name=DEFAULT_TABLE, *args, **kwargs):
         """
         Creates a new table, if it doesn't exist, otherwise
         it returns the cached table.
         
         Arguments:
-            **options {[type]} -- [description]
+            *args
+            **kwargs
         
         Keyword Arguments:
             name {str} -- provide table name (default: {DEFAULT_TABLE})
         """
+
+        # supports first argument as table name
+        name = name or (args[0] if args else None)
+
         if name in self._table_cache:
             return self._table_cache[name]
 
-        self._table = self.table_class(StorageProxy(FlatFileDB, name), **options)
+        self._table = self.table_class(StorageProxy(FlatFileDB, name), **kwargs)
 
         self._table_cache[name] = self._table
 
-        self._tables = self.tables()
+        self._tables = FlatFileDB._database.read() or {}
 
         self._tables[self._get_next_id()] = {'table': name}
         
@@ -151,35 +158,45 @@ class FlatFileDB(object):
         
         return self._table
 
-    def table(self, name=DEFAULT_TABLE, **options):
+    def table(self, name=DEFAULT_TABLE, *args, **kwargs):
         """
         Get access to a specific table.
         
         Arguments:
-            **options -- extra options
+            *args
+            **kwargs -- extra options
         
         Keyword Arguments:
             name {str} -- the name of the table (default: {DEFAULT_TABLE})
         
         Returns:
-            table -- a table object
+            [Table] -- a table object
         """
+
+        # supports first argument as table name
+        name = name or (args[0] if args else None)
+
         if name in self._table_cache:
-            return self._table_cache[name]._read()
+            return self._table_cache[name]
 
-        self._table = self.table_class(StorageProxy(FlatFileDB, name), **options)
+        self._table = self.table_class(StorageProxy(FlatFileDB, name), **kwargs)
 
-        return self._tables._read()
+        return self._table
 
     def tables(self):
         """
         Get a dict of table objects.
         
         Returns:
-            dict -- a dictionary of all tables with ids
+            [list[Table]] -- a list of table objects
         """
-        # return set(self._storage.read()) if self._storage.read() else None
-        return FlatFileDB._database.read() or {}
+        tbls = []
+        meta_data = FlatFileDB._database.read() or {}
+
+        for k, v in meta_data.items():
+            tbls.append(self.table_class(StorageProxy(FlatFileDB, v['table'])))
+
+        return tbls
 
     def purge_table(self, name):
         """Purge a specific table from the database. **CANNOT BE REVERSED!**
@@ -212,12 +229,6 @@ class FlatFileDB(object):
         self._last_id = current_id
 
         return current_id
-
-    # def __getattr__(self, name):
-    #     """
-    #     Forward all unknown attribute calls to the underlying standard table.
-    #     """
-    #     return getattr(self._table, name)
 
     def __len__(self):
         """
@@ -494,7 +505,7 @@ class Table(object):
 
     def contains(self, cond=None, eids=None):
         """
-        Checks whether the database has an element matching a consition or ID.
+        Checks whether the table has an element matching a condition or ID.
         
         If ``eids`` is set, it checks if the db contains an element with one
         of the specified.
