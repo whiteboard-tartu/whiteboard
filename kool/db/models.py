@@ -10,13 +10,11 @@ class Model(object):
         Model provides save, delete, purge operations to every
         class that inherits it.
         """
-        # Instantiate database
-        Model.db = FlatFileDB()
-
+        
         # Get class name, so as to set the table name
         cls_name = self.__class__.__name__
         table_name = camel_to_snake(cls_name)
-        self._table = Model.db.create_table(name=table_name) 
+        self._table = Model.db.create_table(name=table_name)
         self.last_modified = None
         self.date_created = None
         self._id = None
@@ -97,5 +95,16 @@ class Model(object):
         return getattr(self._table, name)
 
 
+# Instantiate database
+Model.db = FlatFileDB()
+
+
 def where(key):
     return Query()[key]
+
+
+def table(cls):
+    """Returns a table object given a class"""
+    cls_name = cls.__name__
+    table_name = camel_to_snake(cls_name)
+    return Model().db.table(table_name)

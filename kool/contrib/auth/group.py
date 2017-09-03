@@ -1,19 +1,49 @@
-from kool.db.models import Model
+from kool.db.models import Model, where, table
+from .permission import Permission
+
 
 class Group(Model):
-	"""
-	Groups are used to cluster similar users.
+    """
+    Groups are used to cluster similar users.
 
-	Extends:
-		Model
-	"""
+    Extends:
+        Model
+    """
 
-	def __init__(self, name):
-		super().__init__()
-		self.name = name
-		self.permissions = []
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+        self.permissions = []
 
-	def add_permissions(self, perm):
-		if not perm in self.permissions:
-			self.permissions.append(perm)
+    def __str__(self):
+        return '{}'.format(self.name)
 
+    def add_permission(self, perm_id):
+        """
+        Receives a permission id, queries it and 
+        if it exists, adds it to list of permissions of 
+        a  given group
+        """ 
+        permission = table(Permission)
+
+        if permission.get(where('_id') == str(perm_id)):
+            if not perm_id in self.permissions:
+                self.permissions.append(perm_id)
+        else:
+            raise ValueError('Topic id not found!')
+        
+        self.update()
+        
+        return self.permissions
+
+    def del_permission(self, perm_id):
+        """
+        Receives a permission id and deletes it from 
+        a list of permissions for a given group
+        """
+        if perm_id in self.permissions:
+            self.permissions.remove(perm_id)
+        
+        self.update()
+
+        return self.permissions
