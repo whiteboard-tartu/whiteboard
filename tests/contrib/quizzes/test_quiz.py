@@ -5,7 +5,7 @@ from kool.db.models import Model
 from kool.db.flatfile import FlatFileDB
 from kool.contrib.auth import User
 from kool.contrib.courses import Course
-from kool.contrib.quizes import Quiz, Question
+from kool.contrib.quizzes import Quiz, Question
 
 TESTS_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 

@@ -5,7 +5,7 @@ from kool.db.models import Model
 from kool.db.flatfile import FlatFileDB
 from kool.contrib.auth import User
 from kool.contrib.courses import Course
-from kool.contrib.quizes import Quiz, Question
+from kool.contrib.quizzes import Quiz, Question
 
 TESTS_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -39,9 +39,6 @@ class TestQuestion(object):
             self.question.add_answers(4)
 
     def test_check_answer(self):
-        print(self.question.answers)
-        print(self.question.correct_answers)
-        
         response = self.question.check_answer()
         assert response == {2: 'Correct'}
 
