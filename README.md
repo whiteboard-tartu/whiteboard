@@ -1,10 +1,41 @@
 # Kool
 
+[![codecov](https://codecov.io/gh/edasi/kool/branch/master/graph/badge.svg)](https://codecov.io/gh/edasi/kool)
+
 Kool is an open source platform for online classroom management. 
+
+This project focus is to create a minimalist framework that educationist can extend when building an online classroom management system.
 
 ## Code Example
 
-TBD - Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
+Create a new user table and instantiate it with one record 
+
+```
+>>> from kool.contrib.auth import User
+>>> tbl_user = User(first_name='Antony', last_name='Orenge', email='antony@test.com', password='secretpwd')
+>>> tbl_user.save()
+```
+
+To insert a record in an existing table
+
+```
+>>> tbl_user.insert({'first_name': 'Mary', 'last_name': 'Doe', 'email': 'mary@doe.com', 'password': 'secretpwd2'})
+```
+
+To query an existing table
+
+```
+>>> from kool.db.models import where
+>>> tbl_user.filter(where('last_name') == 'Doe')
+```
+
+To perform complex queries
+
+```
+>>> from kool.db.flatfile import Query
+>>> User = Query()
+>>> tbl_user.filter((User.first_name == 'Antony') | (User.first_name == 'Mary'))
+```
 
 ## Motivation
 
@@ -21,10 +52,6 @@ pip install -U pip
 pip install -r requirements.txt
 ```
 
-## API Reference
-
-TBD - Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
-
 ## Tests
 
 Run test by running:
@@ -37,11 +64,9 @@ pytest tests/
 
 Test coverage is covered by coverage and pytest-cov tools. The output report is in html format under htmlcov/dir.
 
-## Continuous Integration 
-
-TBD
 
 ## Related projects
+
 * [Blackboard](http://www.blackboard.com/) 
 * [Canvas](https://www.canvaslms.com/)
 * [Chamilo](https://chamilo.org/es/)
@@ -53,4 +78,5 @@ TBD
 * [List on Wikipedia](https://en.wikipedia.org/wiki/List_of_learning_management_systems)
 
 ## License
+
 Kool is licensed under MIT License
