@@ -77,6 +77,11 @@ Test coverage is covered by coverage and pytest-cov tools. The output report is 
 * [Pygrades](https://bitbucket.org/jjauhien/pygrades)
 * [List on Wikipedia](https://en.wikipedia.org/wiki/List_of_learning_management_systems)
 
+
+## Documentation
+
+Read documentation at [Doc](http://kool-docs.readthedocs.io/en/latest/)
+
 ## License
 
 Kool is licensed under MIT License
