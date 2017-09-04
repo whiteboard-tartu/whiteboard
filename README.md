@@ -32,7 +32,7 @@ kool-env\Scripts\activate.bat
 
 On Unix or MacOS, run:
 ```
-source tutorial-env/bin/activate
+source kool-env/bin/activate
 ```
 
 2. Install requirements 
