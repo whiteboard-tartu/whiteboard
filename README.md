@@ -1,18 +1,55 @@
 # Kool
 
+[![CircleCI](https://circleci.com/gh/edasi/kool/tree/master.svg?style=shield)](https://circleci.com/gh/edasi/kool/tree/master)
 [![codecov](https://codecov.io/gh/edasi/kool/branch/master/graph/badge.svg)](https://codecov.io/gh/edasi/kool)
 
 Kool is an open source platform for online classroom management. 
 
 This project focus is to create a minimalist framework that educationist can extend when building an online classroom management system.
 
-## Code Example
+## Getting Started
 
-Create a new user table and instantiate it with one record 
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Prerequisites
+
+* Python3. See [Python3 Tutorial](https://docs.python.org/3/tutorial/)
+* Virtualenv. See [Virtual Environments Tutorial](https://docs.python.org/3/tutorial/venv.html) 
+* Pip. See [Quickstart to installing Python modules](https://pip.pypa.io/en/stable/quickstart/)
+
+### Installing
+
+1. Setup a virtual environment
+
+```
+python3 -m venv kool-env
+```
+
+On Windows, run:
+```
+kool-env\Scripts\activate.bat
+```
+
+On Unix or MacOS, run:
+```
+source tutorial-env/bin/activate
+```
+
+2. Install requirements 
+
+```
+pip install -U pip
+pip install -r requirements.txt
+```
+
+
+### Code Examples
+
+On python interactive shell, start by creating a user.
 
 ```
 >>> from kool.contrib.auth import User
->>> tbl_user = User(first_name='Antony', last_name='Orenge', email='antony@test.com', password='secretpwd')
+>>> tbl_user = User(first_name='John', last_name='Doe', email='john@doe.com', password='secretpwd')
 >>> tbl_user.save()
 ```
 
@@ -37,32 +74,18 @@ To perform complex queries
 >>> tbl_user.filter((User.first_name == 'Antony') | (User.first_name == 'Mary'))
 ```
 
-## Motivation
-
-Currently, teachers who manage online classes use several tools with different purposes. For example, they can use one application for distributing content (mailing lists, custom websites), one application for quizzes and homework submission, one application to manage gradebooks, another for classroom discussion (forums, webconferencing or chat), and several others. Our aim is to consolidate the necessary functionality into one standalone solution while keeping it lightweight, easy to deploy & use, and also make it easy to add new functionality.
-
-## Installation
-
-Start by setting up a virtual environment. See [Virtual Environments Tutorial](http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/)
-
-Once you're done, run: 
-
-```
-pip install -U pip
-pip install -r requirements.txt
-```
 
 ## Tests
 
-Run test by running:
+On a terminal, run:
 
 ```
 pytest tests/
 ```
 
-## Test Coverage
+### Test Coverage
 
-Test coverage is covered by coverage and pytest-cov tools. The output report is in html format under htmlcov/dir.
+Test coverage is covered by [coverage](https://coverage.readthedocs.io/en/coverage-4.4.1/index.html) and [pytest-cov](https://github.com/pytest-dev/pytest-cov) tools. Local test reports are build in html format inside under htmlcov/dir. However, online test reports are built by [CircleCI](https://circleci.com/gh/edasi/kool/) 
 
 
 ## Related projects
@@ -80,8 +103,9 @@ Test coverage is covered by coverage and pytest-cov tools. The output report is 
 
 ## Documentation
 
-Read documentation at [Doc](http://kool-docs.readthedocs.io/en/latest/)
+Read the latest project documentation at [DOC](http://kool-docs.readthedocs.io/en/latest/)
+
 
 ## License
 
-Kool is licensed under MIT License
+Kool is licensed under [MIT License](https://github.com/edasi/kool/blob/master/LICENSE)
