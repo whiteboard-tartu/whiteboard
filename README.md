@@ -1,5 +1,7 @@
 # Kool
 
+[![codecov](https://codecov.io/gh/edasi/kool/branch/master/graph/badge.svg)](https://codecov.io/gh/edasi/kool)
+
 Kool is an open source platform for online classroom management. 
 
 This project focus is to create a minimalist framework that educationist can extend when building an online classroom management system.
