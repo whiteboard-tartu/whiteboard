@@ -3,14 +3,17 @@ Welcome to Kool's documentation!
 
 Kool is an open source platform for online classroom management. 
 
-This project focus is to create a minimalist framework that educationist can extend when building an online classroom management system.
+This project focus is to create a minimalist framework that educationist can extend when building an online classroom management system. Below is an example of extending class User to Student and instantiating a student object.
 
 >>> from kool.contrib.auth import User
->>> tbl_user = User(first_name='Antony', last_name='Orenge', email='antony@test.com', password='secretpwd')
->>> tbl_user.save()
+>>> class Student(User):
+...   pass
+... 
+>>> student = Student(first_name='John', last_name='Doe', email='john@doe.com', password='secretpwd')
+>>> student.save()
 1
->>> tbl_user.insert({'first_name': 'Mary', 'last_name': 'Doe', 'email': 'mary@doe.com', 'password': 'secretpwd2'})
-2
+>>> 
+
 
 
 User's Guide

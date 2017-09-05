@@ -1,68 +1,115 @@
 # Kool
 
+[![CircleCI](https://circleci.com/gh/edasi/kool/tree/master.svg?style=shield)](https://circleci.com/gh/edasi/kool/tree/master)
 [![codecov](https://codecov.io/gh/edasi/kool/branch/master/graph/badge.svg)](https://codecov.io/gh/edasi/kool)
 
 Kool is an open source platform for online classroom management. 
 
-This project focus is to create a minimalist framework that educationist can extend when building an online classroom management system.
+The aim is to create a minimalist framework that educationist can extend when building an online classroom management system.
 
-## Code Example
+The current version supports extending class User, Course, and Quiz. The database is a small CSV flatfile implementation.
 
-Create a new user table and instantiate it with one record 
+## Getting Started
 
-```
->>> from kool.contrib.auth import User
->>> tbl_user = User(first_name='Antony', last_name='Orenge', email='antony@test.com', password='secretpwd')
->>> tbl_user.save()
-```
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-To insert a record in an existing table
+### Prerequisites
 
-```
->>> tbl_user.insert({'first_name': 'Mary', 'last_name': 'Doe', 'email': 'mary@doe.com', 'password': 'secretpwd2'})
-```
+* Python3. See [Python3 Tutorial](https://docs.python.org/3/tutorial/)
+* Virtualenv. See [Virtual Environments Tutorial](https://docs.python.org/3/tutorial/venv.html) 
+* Pip. See [Quickstart to installing Python modules](https://pip.pypa.io/en/stable/quickstart/)
 
-To query an existing table
+### Installing
+
+1. Fetch the latest copy of the project from github
 
 ```
->>> from kool.db.models import where
->>> tbl_user.filter(where('last_name') == 'Doe')
+git clone https://github.com/edasi/kool.git
 ```
 
-To perform complex queries
+2. Setup a virtual environment
 
 ```
->>> from kool.db.flatfile import Query
->>> User = Query()
->>> tbl_user.filter((User.first_name == 'Antony') | (User.first_name == 'Mary'))
+python3 -m venv kool-env
 ```
 
-## Motivation
+On Windows, run:
+```
+kool-env\Scripts\activate.bat
+```
 
-Currently, teachers who manage online classes use several tools with different purposes. For example, they can use one application for distributing content (mailing lists, custom websites), one application for quizzes and homework submission, one application to manage gradebooks, another for classroom discussion (forums, webconferencing or chat), and several others. Our aim is to consolidate the necessary functionality into one standalone solution while keeping it lightweight, easy to deploy & use, and also make it easy to add new functionality.
+On Unix or MacOS, run:
+```
+source kool-env/bin/activate
+```
 
-## Installation
-
-Start by setting up a virtual environment. See [Virtual Environments Tutorial](http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/)
-
-Once you're done, run: 
+3. Install requirements 
 
 ```
 pip install -U pip
 pip install -r requirements.txt
 ```
 
+
+### Code Examples
+
+On python interactive shell, start by extending class User to create a Student.
+
+```python
+from kool.contrib.auth import User
+
+# Extending class User
+class Student(User):
+    pass
+
+student = Student(first_name='John', last_name='Doe', email='john@doe.com', password='secretpwd')
+
+student.save()
+```
+
+To insert another student record in an existing table
+
+```python
+from kool.db.models import table
+
+# Get Student table to perform CRUD operations
+student = table(Student)
+
+student.insert({'first_name': 'Mary', 'last_name': 'Doe', 'email': 'mary@doe.com', 'password': 'secretpwd2'})
+```
+
+To query an existing table
+
+```python
+from kool.db.models import where
+
+student.filter(where('last_name') == 'Doe')
+```
+
+To perform complex queries
+
+```python
+from kool.db.flatfile import Query
+
+Student = Query()
+
+student.filter((Student.first_name == 'John') | (Student.first_name == 'Mary'))
+```
+
+
 ## Tests
 
-Run test by running:
+Written tests are inside the tests/ dir. They are implemented using the pytest module. 
+
+On a terminal, run:
 
 ```
 pytest tests/
 ```
 
-## Test Coverage
+### Test Coverage
 
-Test coverage is covered by coverage and pytest-cov tools. The output report is in html format under htmlcov/dir.
+Test coverage is covered by [coverage](https://coverage.readthedocs.io/en/coverage-4.4.1/index.html) and [pytest-cov](https://github.com/pytest-dev/pytest-cov) tools. Local test reports are build in html format inside under htmlcov/dir. However, online test reports are built by [CircleCI](https://circleci.com/gh/edasi/kool/) 
 
 
 ## Related projects
@@ -80,8 +127,9 @@ Test coverage is covered by coverage and pytest-cov tools. The output report is 
 
 ## Documentation
 
-Read documentation at [Doc](http://kool-docs.readthedocs.io/en/latest/)
+Read the latest project documentation at [kool-docs](http://kool-docs.readthedocs.io/en/latest/)
+
 
 ## License
 
-Kool is licensed under MIT License
+Kool is licensed under [MIT License](https://github.com/edasi/kool/blob/master/LICENSE)

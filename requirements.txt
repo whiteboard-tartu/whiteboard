@@ -1,4 +1,3 @@
-alabaster==0.7.10
 Babel==2.5.0
 bcrypt==3.1.3
 certifi==2017.7.27.1
@@ -21,5 +20,6 @@ requests==2.18.4
 six==1.10.0
 snowballstemmer==1.2.1
 Sphinx==1.6.3
+sphinx-rtd-theme==0.2.4
 sphinxcontrib-websupport==1.0.1
 urllib3==1.22
