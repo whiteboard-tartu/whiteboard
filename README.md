@@ -19,7 +19,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-1. Setup a virtual environment
+1. Fetch the latest copy of the project from git
+
+```
+git clone https://github.com/edasi/kool.git
+```
+
+2. Setup a virtual environment
 
 ```
 python3 -m venv kool-env
@@ -35,7 +41,7 @@ On Unix or MacOS, run:
 source kool-env/bin/activate
 ```
 
-2. Install requirements 
+3. Install requirements 
 
 ```
 pip install -U pip
@@ -45,37 +51,53 @@ pip install -r requirements.txt
 
 ### Code Examples
 
-On python interactive shell, start by creating a user.
+On python interactive shell, start by extending class User to create a Student.
 
-```
->>> from kool.contrib.auth import User
->>> tbl_user = User(first_name='John', last_name='Doe', email='john@doe.com', password='secretpwd')
->>> tbl_user.save()
+```python
+from kool.contrib.auth import User
+
+# Extending class User
+class Student(User):
+    pass
+
+student = Student(first_name='John', last_name='Doe', email='john@doe.com', password='secretpwd')
+
+student.save()
 ```
 
-To insert a record in an existing table
+To insert another student record in an existing table
 
-```
->>> tbl_user.insert({'first_name': 'Mary', 'last_name': 'Doe', 'email': 'mary@doe.com', 'password': 'secretpwd2'})
+```python
+from kool.db.models import table
+
+# Get Student table to perform CRUD operations
+student = table(Student)
+
+student.insert({'first_name': 'Mary', 'last_name': 'Doe', 'email': 'mary@doe.com', 'password': 'secretpwd2'})
 ```
 
 To query an existing table
 
-```
->>> from kool.db.models import where
->>> tbl_user.filter(where('last_name') == 'Doe')
+```python
+from kool.db.models import where
+
+student.filter(where('last_name') == 'Doe')
 ```
 
 To perform complex queries
 
-```
->>> from kool.db.flatfile import Query
->>> User = Query()
->>> tbl_user.filter((User.first_name == 'Antony') | (User.first_name == 'Mary'))
+```python
+from kool.db.flatfile import Query
+
+Student = Query()
+
+student.filter((Student.first_name == 'John') | (Student.first_name == 'Mary'))
 ```
 
 
 ## Tests
+
+Written tests are inside the tests/ dir. They are implemented using the pytest module. 
 
 On a terminal, run:
 
@@ -103,7 +125,7 @@ Test coverage is covered by [coverage](https://coverage.readthedocs.io/en/covera
 
 ## Documentation
 
-Read the latest project documentation at [DOC](http://kool-docs.readthedocs.io/en/latest/)
+Read the latest project documentation at [kool-docs](http://kool-docs.readthedocs.io/en/latest/)
 
 
 ## License
