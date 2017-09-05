@@ -5,11 +5,13 @@
 
 Kool is an open source platform for online classroom management. 
 
-This project focus is to create a minimalist framework that educationist can extend when building an online classroom management system.
+The aim is to create a minimalist framework that educationist can extend when building an online classroom management system.
+
+The current version supports extending class User, Course, and Quiz. The database is a small CSV flatfile implementation.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -19,7 +21,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-1. Fetch the latest copy of the project from git
+1. Fetch the latest copy of the project from github
 
 ```
 git clone https://github.com/edasi/kool.git
