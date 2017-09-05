@@ -100,7 +100,7 @@ student.filter((Student.first_name == 'John') | (Student.first_name == 'Mary'))
 
 ## Tests
 
-Written tests are inside the tests/ dir. They are implemented using the pytest module. 
+Written tests are inside the tests/ directory. They are implemented using the pytest module. 
 
 On a terminal, run:
 
@@ -110,7 +110,7 @@ pytest tests/
 
 ### Test Coverage
 
-Test coverage is covered by [coverage](https://coverage.readthedocs.io/en/coverage-4.4.1/index.html) and [pytest-cov](https://github.com/pytest-dev/pytest-cov) tools. Local test reports are build in html format inside under htmlcov/dir. However, online test reports are built by [CircleCI](https://circleci.com/gh/edasi/kool/) 
+Test coverage is covered by [coverage](https://coverage.readthedocs.io/en/coverage-4.4.1/index.html) and [pytest-cov](https://github.com/pytest-dev/pytest-cov) tools. Local test reports are built in html format inside the htmlcov/ directory that is automatically generated when pytest is run. However, online test reports are built by [CircleCI](https://circleci.com/gh/edasi/kool/) 
 
 
 ## Related projects
