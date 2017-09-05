@@ -42,6 +42,9 @@ class Course(Model):
     def __str__(self):
         return '{}'.format(self.title)
 
+    def __repr__(self):
+        return '{}'.format(self.title)
+
     def add_topic(self, topic_id):
         """
         Receives topic id, performs a query to db and 

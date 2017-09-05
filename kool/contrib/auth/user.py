@@ -21,6 +21,9 @@ class User(Model):
     def __str__(self):
         return '{}'.format(self.full_name())
 
+    def __repr__(self):
+        return '{}'.format(self.full_name())
+
     def set_password(self, raw_password):
         """
         Return encoded password

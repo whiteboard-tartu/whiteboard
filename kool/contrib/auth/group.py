@@ -18,6 +18,9 @@ class Group(Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    def __repr__(self):
+        return '{}'.format(self.name)
+
     def add_permission(self, perm_id):
         """
         Receives a permission id, queries it and 

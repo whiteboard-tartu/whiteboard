@@ -20,6 +20,12 @@ class Quiz(Model):
 
         self.description = options.pop('description', None)
 
+    def __str__(self):
+        return '{}'.format(self.name)
+
+    def __repr__(self):
+        return '{}'.format(self.name)
+
     def add_question(self, description, choices=[], correct_answers=[]):
         """
         Adds a question to an existing quiz

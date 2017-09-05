@@ -25,6 +25,12 @@ class Question(Model):
         self.correct_answers = []
         self.answers = []
 
+    def __str__(self):
+        return '{}'.format(self.description)
+
+    def __repr__(self):
+        return '{}'.format(self.description)
+
     def add_choices(self, choices, correct_answers):
         """
         Adds a list of choices to a choices dictionary
