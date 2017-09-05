@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/edasi/kool/tree/master.svg?style=shield)](https://circleci.com/gh/edasi/kool/tree/master)
 [![codecov](https://codecov.io/gh/edasi/kool/branch/master/graph/badge.svg)](https://codecov.io/gh/edasi/kool)
+[![Documentation Status](https://readthedocs.org/projects/kool-docs/badge/?version=latest)](http://kool-docs.readthedocs.io/en/latest/?badge=latest)
 
 Kool is an open source platform for online classroom management. 
 
