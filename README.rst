@@ -30,36 +30,14 @@ Prerequisites
 Installing
 ~~~~~~~~~~
 
-1. Fetch the latest copy of the project from github
+To install Kool from PyPI, run::
+    
+    $ python install kool
 
-::
+If you prefer to install from source, download the latest version from Releases_. Thereafter, extract and run::
 
-    git clone https://github.com/edasi/kool.git
+    $ python setup.py install
 
-2. Setup a virtual environment
-
-::
-
-    python3 -m venv kool-env
-
-On Windows, run:
-
-::
-
-    kool-env\Scripts\activate.bat
-
-On Unix or MacOS, run:
-
-::
-
-    source kool-env/bin/activate
-
-3. Install requirements
-
-::
-
-    pip install -U pip
-    pip install -r requirements.txt
 
 Code Examples
 ~~~~~~~~~~~~~
@@ -164,3 +142,4 @@ License <https://github.com/edasi/kool/blob/master/LICENSE>`__
    :target: https://codecov.io/gh/edasi/kool
 .. |Documentation Status| image:: https://readthedocs.org/projects/kool-docs/badge/?version=latest
    :target: http://kool-docs.readthedocs.io/en/latest/?badge=latest
+.. _Releases: https://github.com/edasi/kool/releases
