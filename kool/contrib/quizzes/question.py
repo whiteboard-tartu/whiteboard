@@ -3,11 +3,11 @@ from .quiz import Quiz
 
 
 class Question(Model):
-    """
-    Question model provides a set of questions for a quiz.
+    """Question model provides a set of questions for a quiz.
     
     Extends:
         Model
+
     """
     def __init__(self, description, quiz_id, **options):
         super().__init__()
@@ -32,12 +32,15 @@ class Question(Model):
         return '{}'.format(self.description)
 
     def add_choices(self, choices, correct_answers):
-        """
-        Adds a list of choices to a choices dictionary
+        """Adds a list of choices to a choices dictionary
         
         Keyword Arguments:
             choices {list} -- a list of choices (default: {[]})
             correct_answers {list} -- a list of correct answers (default: {[]})
+
+        :param choices: 
+        :param correct_answers: 
+
         """
         if not (isinstance(choices, list) and isinstance(correct_answers, list)):
             raise ValueError('Choices and correct answers must be provided in a list!')
@@ -54,9 +57,11 @@ class Question(Model):
         return self.choices
 
     def add_answers(self, answer):
-        """
-        Adds an answer to a question. 
+        """Adds an answer to a question.
         Only if it exists as one of the choice.
+
+        :param answer: 
+
         """
         if int(answer) in self.choices:
             if not answer in self.answers:

@@ -25,44 +25,38 @@ class User(Model):
         return '{}'.format(self.full_name())
 
     def set_password(self, raw_password):
-        """
-        Return encoded password
-        
-        Arguments:
-            raw_password {str} -- users raw password
-        
-        Returns:
-            [str] -- encoded password
+        """Return encoded password
+
+        :param raw_password: str
+        :returns: [str] -- encoded password
+
         """
         return make_password(raw_password)
 
     def check_password(self, raw_password):
-        """
-        Checks if the password matches correctly
-        
-        Arguments:
-            raw_password {str} -- users raw password
-        
-        Returns:
-            [bool] -- return True if users password matches
+        """Checks if the password matches correctly
+
+        :param raw_password: str
+        :returns: [bool] -- return True if users password matches
+
         """
         def setter(raw_password):
+            """
+
+            :param raw_password: 
+
+            """
             self.set_password(raw_password)
 
         return check_password(raw_password, self.password, setter) 
 
     def add_group(self, group_id):
-        """
-        Adds user to multiple groups.
-        
-        Arguments:
-            group_id {str} -- a group id
-        
-        Returns:
-            list -- a list of group id's
-        
-        Raises:
-            ValueError -- Group id not found!
+        """Adds user to multiple groups.
+
+        :param group_id: str
+        :returns: list -- a list of group id's
+        :raises ValueError: Group id not found
+
         """
         group = table(Group)
 
@@ -77,9 +71,11 @@ class User(Model):
         return self.groups
 
     def del_group(self, group_id):
-        """
-        Receives a group id and deletes it from 
+        """Receives a group id and deletes it from
         a list of group ids for a given user
+
+        :param group_id: 
+
         """
         if group_id in self.groups:
             self.groups.remove(group_id)
@@ -89,17 +85,12 @@ class User(Model):
         return self.groups
 
     def add_permission(self, perm_id):
-        """
-        Assigns user multiple permissions
-        
-        Arguments:
-            perm_id {str} -- a permission id
-        
-        Returns:
-            list -- a list of permissions id's
-        
-        Raises:
-            ValueError -- Permission id not found!
+        """Assigns user multiple permissions
+
+        :param perm_id: str
+        :returns: list -- a list of permissions id's
+        :raises ValueError: Permission id not found
+
         """
         permission = table(Permission)
 
@@ -114,9 +105,11 @@ class User(Model):
         return self.permissions
 
     def del_permission(self, perm_id):
-        """
-        Receives a permission id and deletes it from 
+        """Receives a permission id and deletes it from
         a list of permission ids for a given user
+
+        :param perm_id: 
+
         """
         if perm_id in self.permissions:
             self.permissions.remove(perm_id)
@@ -126,7 +119,11 @@ class User(Model):
         return self.permissions
 
     def has_perm(self, perm_id):
-        """Checks if a user has a given permission"""
+        """Checks if a user has a given permission
+
+        :param perm_id: 
+
+        """
         permission = table(Permission)
         
         if permission.get(where('_id') == str(perm_id)):
@@ -140,7 +137,16 @@ class User(Model):
         return full_name.strip()
 
     def short_name(self):
+        """ """
         return self.first_name
 
     def email_user(self, subject, message, from_email=None, **kwargs):
+        """
+
+        :param subject: 
+        :param message: 
+        :param from_email:  (Default value = None)
+        :param **kwargs: 
+
+        """
         pass
