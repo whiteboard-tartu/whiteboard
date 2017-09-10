@@ -87,8 +87,9 @@ class Query(object):
 
         :param test: type
         :param hashval: type
-        :returns: [QueryImpl] -- A QueryImpl obj
+        :returns: obj: QueryImpl -- A QueryImpl obj
         :raises ValueError: Query has no path
+        
         """
         if not self._path:
             raise ValueError('Query has no path')

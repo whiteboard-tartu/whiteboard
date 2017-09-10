@@ -10,6 +10,8 @@ class Storage(with_metaclass(ABCMeta, object)):
     
     A Storage (de)serializes the current state of the database and stores it in
     some place (memory, file on disk, ...).
+
+
     """
 
     @abstractmethod
@@ -22,6 +24,7 @@ class Storage(with_metaclass(ABCMeta, object)):
         :returns: Decorators:
             abstractmethod
         :raises NotImplementedError: 
+
         """
         raise NotImplementedError('Implement read operation!')
 
@@ -36,6 +39,7 @@ class Storage(with_metaclass(ABCMeta, object)):
 
         :param data: dict
         :raises NotImplementedError: 
+
         """
         raise NotImplementedError('Implement write operation!')
 
@@ -52,12 +56,10 @@ class CSVStorage(Storage):
 
         Also creates the storage file, if it doesn't exist.
 
-        Arguments:
-            path {str} -- Where to store the data.
-            **kwargs -- extra options
-        
-        Keyword Arguments:
-            create_dirs {bool} -- option to create directories (default: {False})
+        :param path: str -- Where to store the data.
+        :param **kwargs -- extra options
+        :param create_dirs: bool -- option to create directories (default: {False})
+
         """
         super(CSVStorage, self).__init__()
         

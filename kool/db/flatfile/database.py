@@ -23,6 +23,8 @@ class Record(dict):
     Each record provides a unique way of accessing it
     by use of ``rid`` field which is a proxy to the ``_id``
     column in the table.
+
+
     """
     def __init__(self, value=None, rid=None, **kwargs):
         super(Record, self).__init__(**kwargs)
@@ -50,6 +52,8 @@ class StorageProxy(object):
     def read(self):
         """Reads from the storage and converts data to a
         dictionary of Records
+
+
         """
         try:
             raw_data = self._table.read() or {}
@@ -67,6 +71,7 @@ class StorageProxy(object):
         """Writes received values to storage.
 
         :param values: 
+
         """
         data = self._table.read() or {}
         self._table.write(values)
@@ -92,6 +97,8 @@ class FlatFileDB(object):
     """FlatFileDB database main class.
     
     Provides access to methods of operating the database.
+
+
     """
     DEFAULT_DB = '.ffdb'
     DEFAULT_TABLE = '_default_table'
@@ -145,6 +152,7 @@ class FlatFileDB(object):
         :param name: str (Default value = DEFAULT_TABLE)
         :param *args: 
         :param **kwargs: 
+
         """
 
         # supports first argument as table name
@@ -174,6 +182,7 @@ class FlatFileDB(object):
         :param *args: 
         :param **kwargs: 
         :returns: Table] -- a table object
+
         """
 
         # supports first argument as table name
@@ -189,7 +198,9 @@ class FlatFileDB(object):
     def tables(self):
         """Get a dict of table objects.
 
+
         :returns: list[Table]] -- a list of table objects
+
         """
         tbls = []
         meta_data = FlatFileDB._database.read() or {}
@@ -203,6 +214,7 @@ class FlatFileDB(object):
         """Purge a specific table from the database. **CANNOT BE REVERSED!**
 
         :param name: str
+
         """
         if name in self._table_cache:
             del self._table_cache[name]
@@ -271,6 +283,7 @@ class Table(object):
         :param cond: Query (Default value = None)
         :param rids: list (Default value = None)
         :returns: list -- the record IDs that were affected during processing
+
         """
         data = self._read()
 
@@ -297,6 +310,8 @@ class Table(object):
         """Clear the query cache.
         
         A simple helper that clears the internal query cache.
+
+
         """
         self._query_cache.clear()
 
@@ -310,7 +325,9 @@ class Table(object):
     def _read(self):
         """Reading access to the database.
 
+
         :returns: dict] -- all values
+
         """
         return self._storage.read()
 
@@ -318,6 +335,7 @@ class Table(object):
         """Writing acccess to the database.
 
         :param values: dict
+
         """
         self._query_cache.clear()
         self._storage.write(values)
@@ -329,7 +347,9 @@ class Table(object):
     def all(self):
         """Get all records stored in the table.
 
+
         :returns: list] -- a list with all records.
+
         """
         return list(itervalues(self._read()))
 
@@ -347,6 +367,7 @@ class Table(object):
         :param record: dict
         :returns: int] -- the inserted record's ID
         :raises ValueError: Record is not a dictionary
+
         """
         rid = self._get_next_id()
 
@@ -364,6 +385,7 @@ class Table(object):
 
         :param records: list
         :returns: list] -- a list containing the inserted records IDs
+
         """
         rids = []
         data = self._read()
@@ -388,6 +410,7 @@ class Table(object):
         :param cond: Default value = None)
         :param rids: Default value = None)
         :returns: list] -- a list containing the removed record's ID
+
         """
         return self.process_records(
             lambda data, rid: data.pop(rid), cond, rids)
@@ -401,6 +424,7 @@ class Table(object):
         :param cond: Query (Default value = None)
         :param rids: list (Default value = None)
         :returns: list] -- a list containing the updated record's ID
+
         """
         if callable(fields):
             return self.process_records(
@@ -419,6 +443,7 @@ class Table(object):
 
         :param cond: Query
         :returns: list[Record]] -- list of matching records
+
         """
         if cond in self._query_cache:
             return self._query_cache[cond][:]
@@ -438,6 +463,7 @@ class Table(object):
         :param cond: Default value = None)
         :param rid: Default value = None)
         :returns: Record | None] -- the record or None
+
         """
         if rid is not None: 
             return self._read().get(rid, None)
@@ -452,6 +478,7 @@ class Table(object):
 
         :param cond: Query
         :returns: int] -- integer value of the count
+
         """
         return len(self.filter(cond))
 
@@ -468,6 +495,7 @@ class Table(object):
         :param cond: Default value = None)
         :param rids: Default value = None)
         :returns: Record | None] -- the record or None
+
         """
         if rids is not None:
             # Records specified by ID
