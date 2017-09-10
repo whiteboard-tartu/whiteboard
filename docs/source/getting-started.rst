@@ -3,8 +3,17 @@
 Getting Started
 ===============
 
+Prerequisites
+-------------
+
+1. `Python3 <https://docs.python.org/3/tutorial/>`_
+
+2. `Virtualenv <https://docs.python.org/3/tutorial/venv.html>`_
+
+3. `Pip <https://pip.pypa.io/en/stable/quickstart/>`_
+
 Installing Kool
------------------
+---------------
 
 To install Kool from PyPI, run::
     
