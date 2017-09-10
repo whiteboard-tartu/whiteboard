@@ -14,7 +14,7 @@ User's Guide
    usage
 
 Extending Kool
-----------------
+--------------
 
 .. toctree::
    :maxdepth: 2

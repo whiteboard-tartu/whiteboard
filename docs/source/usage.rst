@@ -1,6 +1,3 @@
-:tocdepth: 3
-
-
 Advanced Usage
 ==============
 
