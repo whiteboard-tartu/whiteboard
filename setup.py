@@ -15,7 +15,7 @@ setup(
     packages=find_packages(),
 
     # development metadata
-    zip_safe=True,
+    zip_safe=False,
 
     # metadata for upload to PyPI
     author="Antony Orenge",
