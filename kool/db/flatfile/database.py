@@ -16,19 +16,20 @@ from .utils import LRUCache, iteritems, itervalues
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-class Element(dict):
+class Record(dict):
     """
-    Represents an element stored in the database.
-
-    This is a transparent proxy for database elements. It exists
-    to provide a way to access an element's id via ``el.eid``.
+    Represents a record stored in a table.
+    Records are composed of fields.
+    Each record provides a unique way of accessing it 
+    by use of ``rid`` field which is a proxy to the ``_id`` 
+    column in the table.
     """
-    def __init__(self, value=None, eid=None, **kwargs):
-        super(Element, self).__init__(**kwargs)
+    def __init__(self, value=None, rid=None, **kwargs):
+        super(Record, self).__init__(**kwargs)
 
         if value is not None:
             self.update(value)
-            self.eid = eid
+            self.rid = rid
 
 
 class StorageProxy(object):
@@ -53,8 +54,8 @@ class StorageProxy(object):
 
         data = {}
         for key, val in iteritems(raw_data):
-            eid = int(key)
-            data[eid] = Element(val, eid)
+            rid = int(key)
+            data[rid] = Record(val, rid)
 
         return data
 
@@ -232,7 +233,7 @@ class FlatFileDB(object):
 
     def __len__(self):
         """
-        Get the total number of elements in the database.
+        Get the total number of records in the database.
         """
         return len(self._tables)
     
@@ -265,47 +266,47 @@ class Table(object):
     def __str__(self):
         return '{}'.format(self.name)
 
-    def process_elements(self, func, cond=None, eids=None):
+    def process_records(self, func, cond=None, rids=None):
         """
-        Helper function for processing all elements specified by condition
+        Helper function for processing all records specified by condition
         or IDs.
         
         The function passed as ``func`` has to be a callable. It's first
         argument will be the data currently in the database. It's second
-        argument is the element ID of the currently processed element.
+        argument is the record ID of the currently processed record.
         
         Arguments:
-            func {[type]} -- the function to execute on every included element.
+            func {[type]} -- the function to execute on every included record.
                              first argument: all data
-                             second argument: the current eid
+                             second argument: the current rid
         
         Keyword Arguments:
             cond {Query} -- condition to be applied (default: {None})
-            eids {list} -- elements to use (default: {None})
+            rids {list} -- records to use (default: {None})
         
         Returns:
-            [list] -- the element IDs that were affected during processing
+            [list] -- the record IDs that were affected during processing
         """
         data = self._read()
 
-        if eids is not None:
-            # Processed element specified by id
-            for eid in eids: 
-                func(data, eid)
+        if rids is not None:
+            # Processed record specified by id
+            for rid in rids: 
+                func(data, rid)
 
         else:
-            # Collect affected eids
-            eids = []
+            # Collect affected rids
+            rids = []
 
-            # Processed elements specified by condition 
-            if eid in list(data):
-                if cond(data[eid]):
-                    func(data, eid)
-                    eids.append(eid)
+            # Processed records specified by condition 
+            if rid in list(data):
+                if cond(data[rid]):
+                    func(data, rid)
+                    rids.append(rid)
 
         self._write(data)
 
-        return eids
+        return rids
 
     def clear_cache(self):
         """Clear the query cache.
@@ -343,156 +344,156 @@ class Table(object):
         self._storage.write(values)
 
     def __len__(self):
-        """Get the total number of elements in a table"""
+        """Get the total number of records in a table"""
         return len(self._read())
 
     def all(self):
         """
-        Get all elements stored in the table.
+        Get all records stored in the table.
         
         Returns:
-            [list] -- a list with all elements.
+            [list] -- a list with all records.
         """
         return list(itervalues(self._read()))
 
     def __iter__(self):
         """
-        Iterate over all elements stored in the table.
+        Iterate over all records stored in the table.
         
         Yields:
-            [listiterator[Element]] -- an iterator over all elements.
+            [listiterator[Record]] -- an iterator over all records.
         """
         for value in itervalues(self._read()):
             yield value
 
-    def insert(self, element):
+    def insert(self, record):
         """
-        Insert a nwe element into the table.
+        Insert a nwe record into the table.
         
         Arguments:
-            element {dict} -- the element to insert
+            record {dict} -- the record to insert
         
         Returns:
-            [int] -- the inserted element's ID
+            [int] -- the inserted record's ID
         
         Raises:
-            ValueError -- Element is not a dictionary
+            ValueError -- Record is not a dictionary
         """
-        eid = self._get_next_id()
+        rid = self._get_next_id()
 
-        if not isinstance(element, dict):
-            raise ValueError('Element is not a dictionary')
+        if not isinstance(record, dict):
+            raise ValueError('Record is not a dictionary')
 
         data = self._read()
-        data[eid] = element
+        data[rid] = record
         self._write(data)
 
-        return eid
+        return rid
 
-    def insert_multiple(self, elements):
+    def insert_multiple(self, records):
         """
-        Insert multiple elements into the table.
+        Insert multiple records into the table.
         
         Arguments:
-            elements {list} -- a list of elements to insert
+            records {list} -- a list of records to insert
         
         Returns:
-            [list] -- a list containing the inserted elements IDs
+            [list] -- a list containing the inserted records IDs
         """
-        eids = []
+        rids = []
         data = self._read()
 
-        for element in elements: 
-            eid = self._get_next_id()
-            eids.append(eid)
+        for record in records: 
+            rid = self._get_next_id()
+            rids.append(rid)
 
-            data[eid] = element
+            data[rid] = record
 
         self._write(data)
 
-        return eids
+        return rids
 
-    def remove(self, cond=None, eids=None):
+    def remove(self, cond=None, rids=None):
         """
-        Remove all matching elements.
+        Remove all matching records.
         
         Keyword Arguments:
             cond {Query} -- the condition to check against (default: {None})
-            eids {list} -- list of element IDs (default: {None})
+            rids {list} -- list of record IDs (default: {None})
         
         Returns:
-            [list] -- a list containing the removed element's ID
+            [list] -- a list containing the removed record's ID
         """
-        return self.process_elements(
-            lambda data, eid: data.pop(eid), cond, eids)
+        return self.process_records(
+            lambda data, rid: data.pop(rid), cond, rids)
 
-    def update(self, fields, cond=None, eids=None):
+    def update(self, fields, cond=None, rids=None):
         """
-        Update all matching elements to have a given set of fields.
+        Update all matching records to have a given set of fields.
         
         Arguments:
-            fields {dict} -- the fields that the matching elements will
-                                have or a method that will update the elements
+            fields {dict} -- the fields that the matching records will
+                                have or a method that will update the records
         
         Keyword Arguments:
-            cond {Query} -- which elements to update (default: {None})
-            eids {list} -- a list of element IDs (default: {None})
+            cond {Query} -- which records to update (default: {None})
+            rids {list} -- a list of record IDs (default: {None})
         
         Returns:
-            [list] -- a list containing the updated element's ID
+            [list] -- a list containing the updated record's ID
         """
         if callable(fields):
-            return self.process_elements(
-                lambda data, eid: fields(data[eid]), cond, eids)
+            return self.process_records(
+                lambda data, rid: fields(data[rid]), cond, rids)
         else:
-            return self.process_elements(
-                lambda data, eid: data[eid].update(fields), cond, eids)
+            return self.process_records(
+                lambda data, rid: data[rid].update(fields), cond, rids)
     
     def purge(self):
-        """Purge the table by removing all elements"""
+        """Purge the table by removing all records"""
         self._storage.purge()
         self._last_id = 0
 
     def filter(self, cond):
         """
-        Filter all elements by matching condition
+        Filter all records by matching condition
         
         Arguments:
             cond {Query} -- the condition to check against.
         
         Returns:
-            [list[Element]] -- list of matching elements
+            [list[Record]] -- list of matching records
         """
         if cond in self._query_cache:
             return self._query_cache[cond][:]
 
-        elements = [element for element in self.all() if cond(element)]
-        self._query_cache[cond] = elements
+        records = [record for record in self.all() if cond(record)]
+        self._query_cache[cond] = records
 
-        return elements[:]
+        return records[:]
 
-    def get(self, cond=None, eid=None):
+    def get(self, cond=None, rid=None):
         """
-        Get exactly one element by matching condition.
+        Get exactly one record by matching condition.
         
         Keyword Arguments:
             cond {Query} -- the condition to check against (default: {None})
-            eid {int} -- the element's ID  (default: {None})
+            rid {int} -- the record's ID  (default: {None})
         
         Returns:
-            [Element | None] -- the element or None
+            [Record | None] -- the record or None
         """
-        if eid is not None: 
-            return self._read().get(eid, None)
+        if rid is not None: 
+            return self._read().get(rid, None)
 
-        # Get element by condition
-        for element in self.all():
-            if cond(element):
-                return element
+        # Get record by condition
+        for record in self.all():
+            if cond(record):
+                return record
 
     def count(self, cond):
         """
-        Count all elements matching a condition.
+        Count all records matching a condition.
         
         Arguments:
             cond {Query} -- the condition 
@@ -503,23 +504,23 @@ class Table(object):
 
         return len(self.filter(cond))
 
-    def contains(self, cond=None, eids=None):
+    def contains(self, cond=None, rids=None):
         """
-        Checks whether the table has an element matching a condition or ID.
+        Checks whether the table has an record matching a condition or ID.
         
-        If ``eids`` is set, it checks if the db contains an element with one
+        If ``rids`` is set, it checks if the db contains an record with one
         of the specified.
 
         Keyword Arguments:
             cond {Query} -- the condition (default: {None})
-            eids {list} -- the element IDs (default: {None})
+            rids {list} -- the record IDs (default: {None})
         
         Returns:
-            [Element | None] -- the element or None
+            [Record | None] -- the record or None
         """
-        if eids is not None:
-            # Elements specified by ID
-            return any(self.get(eid=eid) for eid in eids)
+        if rids is not None:
+            # Records specified by ID
+            return any(self.get(rid=rid) for rid in rids)
 
         return self.get(cond) is not None
 

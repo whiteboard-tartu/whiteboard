@@ -51,23 +51,23 @@ class Model(object):
         data = self.props()
 
         # Fetch exising object
-        obj = self._table.get(eid=self._id) if self._id else None
+        obj = self._table.get(rid=self._id) if self._id else None
         
         if obj and data:
             # Updates an existing instance
-            ids = self._table.update(data, eids=[self._id])
+            ids = self._table.update(data, rids=[self._id])
             self._id = ids[0]
         
         return self._id
 
-    def delete(self, cond=None, eids=None, * args):
-        eids = []
+    def delete(self, cond=None, rids=None, * args):
+        rids = []
 
-        eids = ([self._id,] if self._id else []) or eids or list(args)
-        if eids:
-            self._table.remove(cond=cond, eids=eids)
+        rids = ([self._id,] if self._id else []) or rids or list(args)
+        if rids:
+            self._table.remove(cond=cond, rids=rids)
         else:
-            raise ValueError('Object must be saved to delete')
+            raise ValueError('Record must be saved to delete')
 
     def purge(self, confirm=False):
         """
