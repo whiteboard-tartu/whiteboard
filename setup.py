@@ -10,7 +10,7 @@ def read(fname):
 
 
 setup(
-    name="kool",
+    name="Kool",
     version="0.0.1",
     packages=find_packages(),
 
@@ -25,9 +25,8 @@ setup(
     keywords="education learning database nosql",
     url="https://github.com/edasi/kool",
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
-        "Intended Audience :: Instructors",
         "License :: OSI Approved :: MIT License",
         "Topic :: Education",
         "Programming Language :: Python :: 3.3",
