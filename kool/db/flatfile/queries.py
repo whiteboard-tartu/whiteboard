@@ -65,8 +65,7 @@ class QueryImpl(object):
 
 
 class Query(object):
-    """
-    FlatFileDB Queries.
+    """FlatFileDB Queries.
 
     Provides a way of writing queries for FlatFileDB.
     Queries can be used in two ways: 
@@ -74,12 +73,12 @@ class Query(object):
     1) ORM-like usage:
 
     >>> User = Query()
-    >>> db.filter(User.name == 'John Doe')
-    >>> db.filter(User['logged-in'] == True)
+    >>> table.filter(User.name == 'John Doe')
+    >>> table.filter(User['logged-in'] == True)
 
     2) Classical usage:
 
-    >>> db.filter(where('value') == True)
+    >>> table.filter(where('value') == True)
 
     Note that ``where(...)`` is a shorthand for ``Query(...)`` allowing for
     a more fluent syntax.
@@ -87,12 +86,12 @@ class Query(object):
     Besides the methods documented here you can combine queries using the
     binary AND and OR operators:
 
-    >>> db.filter(where('field1').exists() & where('field2') == 5)  # Binary AND
-    >>> db.filter(where('field1').exists() | where('field2') == 5)  # Binary OR
+    >>> table.filter(where('field1').exists() & where('field2') == 5)  # Binary AND
+    >>> table.filter(where('field1').exists() | where('field2') == 5)  # Binary OR
 
     Queries are executed by calling the resulting object. They expect to get the
-    element to test as the first argument and return ``True`` or ``False``
-    depending on whether the elements matches the query or not.
+    record to test as the first argument and return ``True`` or ``False``
+    depending on whether the records matches the query or not.
     """
 
     def __init__(self):
@@ -279,7 +278,7 @@ class Query(object):
 
     def any(self, cond):
         """
-        Checks if a condition is met by any element in a list,
+        Checks if a condition is met by any record in a list,
         where a condition can also be a sequence (e.g. list).
 
         >>> Query().f1.any(Query().f2 == 1)
@@ -289,16 +288,16 @@ class Query(object):
             {'f1': [{'f2': 1}, {'f2': 0}]}
 
         >>> Query().f1.any([1, 2, 3])
-        # Match f1 that contains any element from [1, 2, 3]
+        # Match f1 that contains any record from [1, 2, 3]
 
         Matches::
 
             {'f1': [1, 2]}
             {'f1': [3, 4, 5]}
 
-        :param cond: Either a query that at least one element has to match or
-                     a list of which at least one element has to be contained
-                     in the tested element.
+        :param cond: Either a query that at least one record has to match or
+                     a list of which at least one record has to be contained
+                     in the tested record.
 -       """
         if callable(cond):
             def _cmp(value):
@@ -313,7 +312,7 @@ class Query(object):
 
     def all(self, cond):
         """
-        Checks if a condition is met by any element in a list,
+        Checks if a condition is met by any record in a list,
         where a condition can also be a sequence (e.g. list).
 
         >>> Query().f1.all(Query().f2 == 1)
@@ -323,14 +322,14 @@ class Query(object):
             {'f1': [{'f2': 1}, {'f2': 1}]}
 
         >>> Query().f1.all([1, 2, 3])
-        # Match f1 that contains any element from [1, 2, 3]
+        # Match f1 that contains any record from [1, 2, 3]
 
         Matches::
 
             {'f1': [1, 2, 3, 4, 5]}
 
-        :param cond: Either a query that all elements have to match or a list
-                     which has to be contained in the tested element.
+        :param cond: Either a query that all records have to match or a list
+                     which has to be contained in the tested record.
         """
         if callable(cond):
             def _cmp(value):
