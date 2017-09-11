@@ -17,16 +17,19 @@ __all__ = ('Query', 'where')
 
 
 def is_sequence(obj):
+    """Check if object has an iterator
+
+    :param obj: 
+    """
     return hasattr(obj, '__iter__')
 
 
 class QueryImpl(object):
-    """
-    A query implementation.
-
+    """A query implementation.
+    
     This query implementation wraps a test function which is run when the
     query is evaluated by calling the object.
-
+    
     Queries can be combined with logical and/or and modified with logical not.
     """
     def __init__(self, test, hashval):
@@ -44,8 +47,6 @@ class QueryImpl(object):
 
     def __eq__(self, other):
         return self.hashval == other.hashval
-
-    # --- Query modifiers -----------------------------------------------------
 
     def __and__(self, other):
         # We use a frozenset for the hash as the AND operation is commutative
@@ -65,34 +66,9 @@ class QueryImpl(object):
 
 
 class Query(object):
-    """
-    FlatFileDB Queries.
-
-    Provides a way of writing queries for FlatFileDB.
-    Queries can be used in two ways: 
+    """FlatFileDB Queries.
     
-    1) ORM-like usage:
-
-    >>> User = Query()
-    >>> db.filter(User.name == 'John Doe')
-    >>> db.filter(User['logged-in'] == True)
-
-    2) Classical usage:
-
-    >>> db.filter(where('value') == True)
-
-    Note that ``where(...)`` is a shorthand for ``Query(...)`` allowing for
-    a more fluent syntax.
-
-    Besides the methods documented here you can combine queries using the
-    binary AND and OR operators:
-
-    >>> db.filter(where('field1').exists() & where('field2') == 5)  # Binary AND
-    >>> db.filter(where('field1').exists() | where('field2') == 5)  # Binary OR
-
-    Queries are executed by calling the resulting object. They expect to get the
-    element to test as the first argument and return ``True`` or ``False``
-    depending on whether the elements matches the query or not.
+    Provides a way of writing queries for FlatFileDB.
     """
 
     def __init__(self):
@@ -107,23 +83,23 @@ class Query(object):
     __getitem__ = __getattr__
 
     def _generate_test(self, test, hashval):
-        """
-        Generate a query based on a test function.
+        """Generate a query based on a test function.
 
-        Arguments:
-            test {[type]} -- The test the query executes.
-            hashval {[type]} -- The hash of the query.
+        :param test: type
+        :param hashval: type
+        :returns: obj: QueryImpl -- A QueryImpl obj
+        :raises ValueError: Query has no path
         
-        Returns:
-            [QueryImpl] -- A QueryImpl obj
-        
-        Raises:
-            ValueError -- Query has no path
         """
         if not self._path:
             raise ValueError('Query has no path')
 
         def impl(value):
+            """
+
+            :param value: 
+
+            """
             try:
                 # Resolve the path
                 for part in self._path:
@@ -154,6 +130,11 @@ class Query(object):
         if sys.version_info <= (3, 0):  # pragma: no cover
             # Special UTF-8 handling on Python 2
             def test(value):
+                """
+
+                :param value: 
+
+                """
                 with catch_warning(UnicodeWarning):
                     try:
                         return value == rhs
@@ -167,6 +148,11 @@ class Query(object):
 
         else:  # pragma: no cover
             def test(value):
+                """
+
+                :param value: 
+
+                """
                 return value == rhs
 
         return self._generate_test(lambda value: test(value),
@@ -228,116 +214,135 @@ class Query(object):
                                    ('>=', tuple(self._path), rhs))
 
     def exists(self):
-        """
-        Test for a dict where a provided key exists.
-
-        >>> Query().f1.exists() >= 42
+        """Test for a dict where a provided key exists.
 
         :param rhs: The value to compare against
+
+        >>> Query().f1.exists() >= 42
         """
         return self._generate_test(lambda _: True,
                                    ('exists', tuple(self._path)))
 
     def matches(self, regex):
-        """
-        Run a regex test against a dict value (whole string has to match).
-
-        >>> Query().f1.matches(r'^\w+$')
+        """Run a regex test against a dict value (whole string has to match).
 
         :param regex: The regular expression to use for matching
+
+        >>> Query().f1.matches(r'^\w+$')
         """
         return self._generate_test(lambda value: re.match(regex, value),
                                    ('matches', tuple(self._path), regex))
 
     def filter(self, regex):
-        """
-        Run a regex test against a dict value (only substring string has to
+        """Run a regex test against a dict value (only substring string has to
         match).
 
-        >>> Query().f1.filter(r'^\w+$')
-
         :param regex: The regular expression to use for matching
+
+        >>> Query().f1.filter(r'^\w+$')
         """
         return self._generate_test(lambda value: re.filter(regex, value),
                                    ('filter', tuple(self._path), regex))
 
     def test(self, func, *args):
-        """
-        Run a user-defined test function against a dict value.
+        """Run a user-defined test function against a dict value.
+
+        :param func: The function to call, passing the dict as the first
+                     argument
+        :param args: Additional arguments to pass to the test function
+        :param *args: 
 
         >>> def test_func(val):
         ...     return val == 42
         ...
         >>> Query().f1.test(test_func)
-
-        :param func: The function to call, passing the dict as the first
-                     argument
-        :param args: Additional arguments to pass to the test function
         """
         return self._generate_test(lambda value: func(value, *args),
                                    ('test', tuple(self._path), func, args))
 
     def any(self, cond):
-        """
-        Checks if a condition is met by any element in a list,
+        """Checks if a condition is met by any record in a list,
         where a condition can also be a sequence (e.g. list).
-
-        >>> Query().f1.any(Query().f2 == 1)
-
+        
+        
         Matches::
-
+        
             {'f1': [{'f2': 1}, {'f2': 0}]}
-
-        >>> Query().f1.any([1, 2, 3])
-        # Match f1 that contains any element from [1, 2, 3]
-
+        
+        
         Matches::
-
+        
             {'f1': [1, 2]}
             {'f1': [3, 4, 5]}
 
-        :param cond: Either a query that at least one element has to match or
-                     a list of which at least one element has to be contained
-                     in the tested element.
--       """
+        :param cond: Either a query that at least one record has to match or
+                     a list of which at least one record has to be contained
+                     in the tested record.
+
+        >>> Query().f1.any(Query().f2 == 1)
+        
+        >>> Query().f1.any([1, 2, 3])
+        # Match f1 that contains any record from [1, 2, 3]
+        """
         if callable(cond):
             def _cmp(value):
+                """
+
+                :param value: 
+
+                """
                 return is_sequence(value) and any(cond(e) for e in value)
 
         else:
             def _cmp(value):
+                """
+
+                :param value: 
+
+                """
                 return is_sequence(value) and any(e in cond for e in value)
 
         return self._generate_test(lambda value: _cmp(value),
                                    ('any', tuple(self._path), freeze(cond)))
 
     def all(self, cond):
-        """
-        Checks if a condition is met by any element in a list,
+        """Checks if a condition is met by any record in a list,
         where a condition can also be a sequence (e.g. list).
-
-        >>> Query().f1.all(Query().f2 == 1)
-
+        
+        
         Matches::
-
+        
             {'f1': [{'f2': 1}, {'f2': 1}]}
-
-        >>> Query().f1.all([1, 2, 3])
-        # Match f1 that contains any element from [1, 2, 3]
-
+        
+        
         Matches::
-
+        
             {'f1': [1, 2, 3, 4, 5]}
 
-        :param cond: Either a query that all elements have to match or a list
-                     which has to be contained in the tested element.
+        :param cond: Either a query that all records have to match or a list
+                     which has to be contained in the tested record.
+
+        >>> Query().f1.all(Query().f2 == 1)
+        
+        >>> Query().f1.all([1, 2, 3])
+        # Match f1 that contains any record from [1, 2, 3]
         """
         if callable(cond):
             def _cmp(value):
+                """
+
+                :param value: 
+
+                """
                 return is_sequence(value) and all(cond(e) for e in value)
 
         else:
             def _cmp(value):
+                """
+
+                :param value: 
+
+                """
                 return is_sequence(value) and all(e in value for e in cond)
 
         return self._generate_test(lambda value: _cmp(value),
@@ -345,4 +350,9 @@ class Query(object):
 
 
 def where(key):
+    """
+
+    :param key: 
+
+    """
     return Query()[key]

@@ -66,7 +66,7 @@ class TestFlatFile(object):
         table.insert({'int': 1, 'char': 'a'})
         table.insert({'int': 2, 'char': 'b'})
         table.insert({'int': 3, 'char': 'c'})
-        assert table.get(eid=2)['char'] == 'b'
+        assert table.get(rid=2)['char'] == 'b'
         assert table.get(cond=(where('char') == 'a'))['int'] == '1'
         table.purge()
         assert len(table) == 0        
