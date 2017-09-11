@@ -3,9 +3,7 @@ from kool.contrib.courses import Course
 
 
 class Quiz(Model):
-    """
-    Quiz comprises of questions and answers
-    """
+    """Quiz comprises of questions and answers"""
 
     def __init__(self, name, course_id, **options):
         super().__init__()
@@ -20,16 +18,20 @@ class Quiz(Model):
 
         self.description = options.pop('description', None)
 
+    def __str__(self):
+        return '{}'.format(self.name)
+
+    def __repr__(self):
+        return '{}'.format(self.name)
+
     def add_question(self, description, choices=[], correct_answers=[]):
-        """
-        Adds a question to an existing quiz
-        
-        Arguments:
-            description {str} -- verbose description of the question
-        
-        Keyword Arguments:
-            choices {list} -- a list of choices (default: {[]})
-            correct_answers {list} -- a list of correct answers (default: {[]})
+        """Adds a question to an existing quiz
+
+        :param description: str
+        :param Keyword: Arguments
+        :param choices: list (Default value = [])
+        :param correct_answers: list (Default value = [])
+
         """
         from .question import Question
 

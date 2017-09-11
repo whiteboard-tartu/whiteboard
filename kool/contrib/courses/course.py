@@ -2,11 +2,11 @@ from kool.db.models import Model, where, table
 
 
 class Topic(Model):
-    """
-    These are topics that constitute a course
+    """These are topics that constitute a course
     
     Extends:
         Model
+
     """
 
     def __init__(self, title, **options):
@@ -17,11 +17,11 @@ class Topic(Model):
 
 
 class Course(Model):
-    """
-    Course describes a plan of study for a student
+    """Course describes a plan of study for a student
     
     Extends:
         Model
+
     """
     
     def __init__(self, title, instructor_id, **options):
@@ -42,10 +42,15 @@ class Course(Model):
     def __str__(self):
         return '{}'.format(self.title)
 
+    def __repr__(self):
+        return '{}'.format(self.title)
+
     def add_topic(self, topic_id):
-        """
-        Receives topic id, performs a query to db and 
+        """Receives topic id, performs a query to db and
         if found, add topic id to list of topics in a given course
+
+        :param topic_id: 
+
         """
         topic = table(Topic)
 
@@ -60,9 +65,11 @@ class Course(Model):
         return self.topics
 
     def del_topic(self, topic_id):
-        """
-        Receives a topic id and deletes it from 
+        """Receives a topic id and deletes it from
         a list of topics for a given course
+
+        :param topic_id: 
+
         """
         if topic_id in self.topics:
             self.topics.remove(topic_id)

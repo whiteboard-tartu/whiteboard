@@ -6,70 +6,60 @@ from .utils import with_metaclass, touch, mkdir
 
 
 class Storage(with_metaclass(ABCMeta, object)):
-    """
-    The abstract base class for all Storages.
-
+    """The abstract base class for all Storages.
+    
     A Storage (de)serializes the current state of the database and stores it in
     some place (memory, file on disk, ...).
+
+
     """
 
     @abstractmethod
     def read(self):
-        """
-        Read the last stored state.
-
-        Any kind of deserialization should go here.
-        Return ``None`` here to indicate that the storage is empty.
-
-        Decorators:
-            abstractmethod
+        """Read the last stored state.
         
-        Raises:
-            NotImplementedError
+        Any kind of deserialization should go here.
+
+
+        :returns: Decorators:
+            abstractmethod
+        :raises NotImplementedError: 
+
         """
         raise NotImplementedError('Implement read operation!')
 
     @abstractmethod
     def write(self, data):
-        """
-        Write the current state of the database to the storage.
-
+        """Write the current state of the database to the storage.
+        
         Any kind of serialization should go here.
-
+        
         Decorators:
             abstractmethod
-        
-        Arguments:
-            data {dict} -- The current state of the database.
-        
-        Raises:
-            NotImplementedError
+
+        :param data: dict
+        :raises NotImplementedError: 
+
         """
         raise NotImplementedError('Implement write operation!')
 
     def close(self):
-        """
-        Optional: Close open file handles, etc.
-        """
+        """Optional: Close open file handles, etc."""
         pass
 
 
 class CSVStorage(Storage):
-    """
-    Store the data in a CSV file.
-    """
+    """Store the data in a CSV file."""
+
     def __init__(self, path, init_db=True, create_dirs=False, **kwargs):
-        """
-        Create a new csv storage instance.
+        """Create a new csv storage instance.
 
         Also creates the storage file, if it doesn't exist.
 
-        Arguments:
-            path {str} -- Where to store the data.
-            **kwargs -- extra options
-        
-        Keyword Arguments:
-            create_dirs {bool} -- option to create directories (default: {False})
+        :param path: str -- Where to store the data.
+        :param **kwargs -- extra options
+        :param create_dirs: bool -- option to create directories (default: {False})
+
         """
         super(CSVStorage, self).__init__()
         
@@ -92,6 +82,7 @@ class CSVStorage(Storage):
         self._handle = open(path, 'r+')
 
     def read(self):
+        """Reads from a csv file"""
         # Get the file size
         self._handle.seek(0, os.SEEK_END)
         size = self._handle.tell()
@@ -110,6 +101,11 @@ class CSVStorage(Storage):
             return data
 
     def write(self, data):
+        """Writes data to a csv file
+
+        :param data: 
+
+        """
         self._handle.seek(0)
         frow = None
         
@@ -135,8 +131,10 @@ class CSVStorage(Storage):
             self._handle.truncate()
 
     def purge(self):
+        """Truncate csv file"""
         self._handle.seek(0)
         self._handle.truncate()
 
     def close(self):
+        """Close file"""
         self._handle.close()

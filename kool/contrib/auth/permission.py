@@ -3,12 +3,12 @@ from kool.contrib.courses import Course
 
 
 class Permission(Model):
-    """
-    Permissions are used to determine actions permitted on a course
+    """Permissions are used to determine actions permitted on a course
     by a user or group
-
+    
     Extends:
         Model
+
     """
     PERMISSIONS = ('add', 'edit', 'delete')
 
@@ -30,4 +30,7 @@ class Permission(Model):
             self.name = perm[1] if perm else None
 
     def __str__(self):
+        return '{}'.format(self.name)
+
+    def __repr__(self):
         return '{}'.format(self.name)

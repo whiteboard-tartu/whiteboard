@@ -10,12 +10,12 @@ def read(fname):
 
 
 setup(
-    name="kool",
-    version="0.0.1",
+    name="Kool",
+    version="0.0.2",
     packages=find_packages(),
 
     # development metadata
-    zip_safe=True,
+    zip_safe=False,
 
     # metadata for upload to PyPI
     author="Antony Orenge",
@@ -24,10 +24,10 @@ setup(
     license="MIT",
     keywords="education learning database nosql",
     url="https://github.com/edasi/kool",
+    python_requires='>=3',
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
-        "Intended Audience :: Instructors",
         "License :: OSI Approved :: MIT License",
         "Topic :: Education",
         "Programming Language :: Python :: 3.3",
@@ -38,5 +38,5 @@ setup(
         "Operating System :: OS Independent"
     ],
 
-    long_description=read('README.md'),
+    long_description=read('README.rst'),
 )
