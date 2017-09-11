@@ -100,7 +100,7 @@ class FlatFileDB(object):
 
 
     """
-    DEFAULT_DB = '.ffdb'
+    DEFAULT_DB = 'ffdb'
     DEFAULT_TABLE = '_default_table'
     DEFAULT_STORAGE = CSVStorage
     _storage = None
