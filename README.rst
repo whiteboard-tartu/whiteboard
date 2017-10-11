@@ -1,3 +1,10 @@
+.. image:: https://github.com/edasi/kool/blob/master/docs/source/_static/logo.png
+   :height: 100 px
+   :width: 100 px
+   :scale: 50 %
+   :alt: Kool Logo
+   :align: left
+
 Kool
 ====
 
