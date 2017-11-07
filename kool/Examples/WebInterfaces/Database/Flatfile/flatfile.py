@@ -9,11 +9,27 @@ http://docs.cherrypy.org/en/latest/tutorials.html
 
 """
 import string
-
 import cherrypy
 from cgi import parse_qs, escape
 
-getname = """
+startpage = """
+<html>
+<head></head>
+<body>
+
+<form method="post" action="start">
+  <input type="radio" name="update" value="adduser" checked> Add class member<br>
+  <input type="radio" name="update" value="deleteuser"> Delete class member<br>
+  <input type="radio" name="update" value="updateuser"> Update class member grades<br>
+  <input type="radio" name="update" value="showuser"> Show class member grades<br>
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
+"""
+
+addname = """
 <html>
 <head></head>
           <body>
@@ -46,10 +62,101 @@ showname = """
 </html>
 """
 
-class AddName(object):
+delname = """
+<html>
+<body>
+  <p>
+      Placeholder for now
+   </p>
+</body>
+</html>
+"""
+
+showuser = """
+<html>
+<body>
+  <p>
+      Placeholder for now
+   </p>
+</body>
+</html>
+"""
+
+addgrade = """
+<html>
+<body>
+  <p>
+      Placeholder for now
+   </p>
+</body>
+</html>
+"""
+
+addgroup = """
+<html>
+<body>
+  <p>
+      Placeholder for now
+   </p>
+</body>
+</html>
+"""
+
+delgroup = """
+<html>
+<body>
+  <p>
+      Placeholder for now
+   </p>
+</body>
+</html>
+"""
+
+addpermission = """
+<html>
+<body>
+  <p>
+      Placeholder for now
+   </p>
+</body>
+</html>
+"""
+
+delpermission = """
+<html>
+<body>
+  <p>
+      Placeholder for now
+   </p>
+</body>
+</html>
+"""
+
+haspermission = """
+<html>
+<body>
+  <p>
+      Placeholder for now
+   </p>
+</body>
+</html>
+"""
+
+class accessdatabase(object):
     @cherrypy.expose
     def index(self):
-        return getname
+        return startpage
+
+    @cherrypy.expose
+    def start(self,update):
+        if update=='adduser':
+            return addname
+        elif update=='deleteuser':
+            return delname
+        elif update=='showuser':
+            return showuser
+        else:
+            return addgrade
 
     @cherrypy.expose
     def generate(self,fname,lname,email,pword1,pword2):
@@ -79,4 +186,4 @@ class AddName(object):
 
 
 if __name__ == '__main__':
-    cherrypy.quickstart(AddName())
+    cherrypy.quickstart(accessdatabase())
