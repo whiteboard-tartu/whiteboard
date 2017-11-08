@@ -17,10 +17,12 @@ startpage = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
 <body>
-
 <header>
 <table style="width:100%">
   <tr>
@@ -36,7 +38,7 @@ startpage = """
   </tr>
   </table>
 </header>
-
+<h2>Choose an option</h2>
 <form method="post" action="start">
   <input type="radio" name="update" value="adduser" checked> Add class member<br>
   <input type="radio" name="update" value="deleteuser"> Delete class member<br>
@@ -45,6 +47,7 @@ startpage = """
   <input type="submit" value="Submit">
 </form>
 <footer>
+<img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
 </footer>
 </body>
 </html>
@@ -54,10 +57,28 @@ addname = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
-          <body>
-          <h1>Kool</h1>
+    <header>
+    <table style="width:100%">
+      <tr>
+      <th>
+        <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
+      </th>
+      <th colspan="3">
+      <h1>Kool</h1>
+      </th>
+      <th>
+        <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
+      </th>
+      </tr>
+      </table>
+    </header>
+      <body>
+          <h2>Add user</h2>
             <form method="post" action="generate">
               <p>
                 First name: <input type="text" name="fname"><br>
@@ -70,7 +91,10 @@ addname = """
                  <input type="submit" value="Submit">
               </p>
             </form>
-          </body>
+    <footer>
+    <img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
+    </footer>
+    </body>
     </html>
 """
 
@@ -78,6 +102,9 @@ showname = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
 <body>
@@ -96,6 +123,9 @@ delname = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
 <h1>Kool</h1>
@@ -111,6 +141,9 @@ showuser = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
 <h1>Kool</h1>
@@ -126,6 +159,9 @@ addgrade = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
 <h1>Kool</h1>
@@ -141,6 +177,9 @@ addgroup = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
 <h1>Kool</h1>
@@ -156,6 +195,9 @@ delgroup = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
 <h1>Kool</h1>
@@ -171,6 +213,9 @@ addpermission = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
 <h1>Kool</h1>
@@ -186,6 +231,9 @@ delpermission = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
 <h1>Kool</h1>
@@ -201,6 +249,9 @@ haspermission = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
+<link rel="icon"
+      type="image/png"
+      href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
 <h1>Kool</h1>
