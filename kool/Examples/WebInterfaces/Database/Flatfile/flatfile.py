@@ -8,14 +8,34 @@ More information on cherrypy at:
 http://docs.cherrypy.org/en/latest/tutorials.html
 
 """
+import os, os.path
 import string
 import cherrypy
 from cgi import parse_qs, escape
 
 startpage = """
 <html>
-<head></head>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
 <body>
+
+<header>
+<table style="width:100%">
+  <tr>
+  <th>
+    <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
+  </th>
+  <th colspan="3">
+  <h1>Kool</h1>
+  </th>
+  <th>
+    <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
+  </th>
+  </tr>
+  </table>
+</header>
 
 <form method="post" action="start">
   <input type="radio" name="update" value="adduser" checked> Add class member<br>
@@ -24,15 +44,20 @@ startpage = """
   <input type="radio" name="update" value="showuser"> Show class member grades<br>
   <input type="submit" value="Submit">
 </form>
-
+<footer>
+</footer>
 </body>
 </html>
 """
 
 addname = """
 <html>
-<head></head>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
           <body>
+          <h1>Kool</h1>
             <form method="post" action="generate">
               <p>
                 First name: <input type="text" name="fname"><br>
@@ -51,7 +76,12 @@ addname = """
 
 showname = """
 <html>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
 <body>
+<h1>Kool</h1>
   <p>
       First name: %(fname)s<br>
       Last name: %(lname)s<br>
@@ -64,6 +94,11 @@ showname = """
 
 delname = """
 <html>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
+<h1>Kool</h1>
 <body>
   <p>
       Placeholder for now
@@ -74,6 +109,11 @@ delname = """
 
 showuser = """
 <html>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
+<h1>Kool</h1>
 <body>
   <p>
       Placeholder for now
@@ -84,6 +124,11 @@ showuser = """
 
 addgrade = """
 <html>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
+<h1>Kool</h1>
 <body>
   <p>
       Placeholder for now
@@ -94,6 +139,11 @@ addgrade = """
 
 addgroup = """
 <html>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
+<h1>Kool</h1>
 <body>
   <p>
       Placeholder for now
@@ -104,6 +154,11 @@ addgroup = """
 
 delgroup = """
 <html>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
+<h1>Kool</h1>
 <body>
   <p>
       Placeholder for now
@@ -114,6 +169,11 @@ delgroup = """
 
 addpermission = """
 <html>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
+<h1>Kool</h1>
 <body>
   <p>
       Placeholder for now
@@ -124,6 +184,11 @@ addpermission = """
 
 delpermission = """
 <html>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
+<h1>Kool</h1>
 <body>
   <p>
       Placeholder for now
@@ -134,6 +199,11 @@ delpermission = """
 
 haspermission = """
 <html>
+<head>
+<link href="/static/css/style.css" rel="stylesheet">
+<title>Kool</title>
+</head>
+<h1>Kool</h1>
 <body>
   <p>
       Placeholder for now
@@ -186,4 +256,14 @@ class accessdatabase(object):
 
 
 if __name__ == '__main__':
-    cherrypy.quickstart(accessdatabase())
+    conf = {
+        '/': {
+            'tools.sessions.on': True,
+            'tools.staticdir.root': os.path.abspath(os.getcwd())
+        },
+        '/static': {
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': './public'
+        }
+    }
+    cherrypy.quickstart(accessdatabase(), '/', conf)
