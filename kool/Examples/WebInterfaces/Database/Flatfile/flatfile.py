@@ -84,7 +84,6 @@ educator = """
 <form method="post" action="educatoraction">
   <input type="radio" name="option" value="addstudent" checked>Add class member<br>
   <input type="radio" name="option" value="delstudent">Delete class member<br>
-  <input type="radio" name="option" value="updatestudentscore">Add class member grade<br>
   <input type="radio" name="option" value="showstudentscore">Show class member grades<br>
   <input type="radio" name="option" value="makequiz">Make multiple choice quiz<br>
   <input type="submit" value="Submit">
@@ -172,50 +171,6 @@ addstudent = """
                 <input type="password" name="pword1"><br>
                 Repeat password:<br>
                 <input type="password" name="pword2">
-              </p>
-              <p>
-                 <input type="submit" value="Submit">
-              </p>
-            </form>
-    <footer>
-    <img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-    </footer>
-    </body>
-    </html>
-"""
-
-addstudentscore = """
-<html>
-<head>
-<link href="/static/css/style.css" rel="stylesheet">
-<link rel="icon"
-      type="image/png"
-      href="/static/images/logo.png" />
-<title>Kool</title>
-</head>
-    <header>
-    <table style="width:100%">
-      <tr>
-      <th>
-        <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
-      </th>
-      <th colspan="3">
-      <h1>Kool</h1>
-      </th>
-      <th>
-        <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
-      </th>
-      </tr>
-      </table>
-    </header>
-      <body>
-          <h2>Add student score - may remove for now if just supporting multiple choice
-          quizzes within the system</h2>
-            <form method="post" action="addstudentscoreaction">
-              <p>
-                Student name (change to menu selection):<br> <input type="text" name="sname"><br>
-                Quiz (change to menu selection):<br> <input type="text" name="quiz"><br>
-                Score:<br> <input type="text" name="score">
               </p>
               <p>
                  <input type="submit" value="Submit">
