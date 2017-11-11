@@ -4,6 +4,8 @@
 An example demonstrating how to create a web interface to populate a flatfile
 database using cherrypy and python3
 
+This version in progress to match presentation setup
+
 More information on cherrypy at:
 http://docs.cherrypy.org/en/latest/tutorials.html
 
