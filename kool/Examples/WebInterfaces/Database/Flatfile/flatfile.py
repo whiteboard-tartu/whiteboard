@@ -154,7 +154,8 @@ makequiz = """
               <p>
                 <p>
                   New quiz name:<br> <input type="text" name="qname"><br>
-                  Multiple choice options per question:<br> <input type="number" name="options"><br>
+                  Number of questions (1-100):<br> <input type="number" name="numquestions"><br>
+                  Multiple choice options per question (1-15):<br> <input type="number" name="numoptions"><br>
                   </p>
                 </p>
               <p>
@@ -210,6 +211,25 @@ quiz = """
                  <input type="submit" value="Submit">
               </p>
             </form>
+"""
+
+quizoptionstart = """
+<form method="post" action="gradequizaction">
+  <p>
+"""
+
+newquestion = """
+<h3> Question text:<br> <input type="text" name="qtext"><br> </h3>
+"""
+
+quizoption = """
+Option text:<br> <input type="text" name="otext">
+<input type="radio" name="option" value="A">Correct answer<br>
+"""
+quizoptionend = """
+  <input type="submit" value="Create quiz">
+  </p>
+</form>
 """
 
 delstudentrecord = """
@@ -281,9 +301,16 @@ class accessdatabase(object):
             return page
 
     @cherrypy.expose
-    def makequizaction(self,qname,options):
-    #check firstname, lastname, quiz and score match
-        page = top + addquizquestion + bottom
+    def makequizaction(self,qname,numquestions,numoptions):
+        quizoptions = quizoptionstart
+        for nn in range(0, int(numquestions)):
+            quizoptions = quizoptions + newquestion
+            for n in range(0, int(numoptions)):
+                quizoptions = quizoptions + quizoption
+        quizoptions = quizoptions + quizoptionend
+
+    #setup forms apporpriately to write to database
+        page = top + quizoptions + bottom
         return page
 
     @cherrypy.expose
