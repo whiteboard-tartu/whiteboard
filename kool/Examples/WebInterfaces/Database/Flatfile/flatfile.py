@@ -15,7 +15,7 @@ import string
 import cherrypy
 from cgi import parse_qs, escape
 
-startpage = """
+top = """
 <html>
 <head>
 <link href="/static/css/style.css" rel="stylesheet">
@@ -24,7 +24,6 @@ startpage = """
       href="/static/images/logo.png" />
 <title>Kool</title>
 </head>
-<body>
 <header>
 <table style="width:100%">
   <tr>
@@ -40,6 +39,18 @@ startpage = """
   </tr>
   </table>
 </header>
+<body>
+"""
+
+bottom = """
+</body>
+<footer>
+<img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
+</footer>
+</html>
+"""
+
+startpage = """
 <h2>Login</h2>
 <form method="post" action="start">
   Email:<br> <input type="email" name="email"><br>
@@ -48,38 +59,9 @@ startpage = """
   <input type="radio" name="role" value="educator">Educator<br>
   <input type="submit" value="Submit">
 </form>
-<footer>
-<img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-</footer>
-</body>
-</html>
 """
 
 educator = """
-<html>
-<head>
-<link href="/static/css/style.css" rel="stylesheet">
-<link rel="icon"
-      type="image/png"
-      href="/static/images/logo.png" />
-<title>Kool</title>
-</head>
-<body>
-<header>
-<table style="width:100%">
-  <tr>
-  <th>
-    <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
-  </th>
-  <th colspan="3">
-  <h1>Kool</h1>
-  </th>
-  <th>
-    <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
-  </th>
-  </tr>
-  </table>
-</header>
 <h2>Choose an option</h2>
 <form method="post" action="educatoraction">
   <input type="radio" name="option" value="addstudent" checked>Add class member<br>
@@ -88,76 +70,18 @@ educator = """
   <input type="radio" name="option" value="makequiz">Make multiple choice quiz<br>
   <input type="submit" value="Submit">
 </form>
-<footer>
-<img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-</footer>
-</body>
-</html>
 """
 
 student = """
-<html>
-<head>
-<link href="/static/css/style.css" rel="stylesheet">
-<link rel="icon"
-      type="image/png"
-      href="/static/images/logo.png" />
-<title>Kool</title>
-</head>
-<body>
-<header>
-<table style="width:100%">
-  <tr>
-  <th>
-    <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
-  </th>
-  <th colspan="3">
-  <h1>Kool</h1>
-  </th>
-  <th>
-    <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
-  </th>
-  </tr>
-  </table>
-</header>
 <h2>Choose an option</h2>
 <form method="post" action="studentaction">
   <input type="radio" name="option" value="showmyscores">Show my scores<br>
   <input type="radio" name="option" value="takequiz">Take quiz<br>
   <input type="submit" value="Submit">
 </form>
-<footer>
-<img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-</footer>
-</body>
-</html>
 """
 
 addstudent = """
-<html>
-<head>
-<link href="/static/css/style.css" rel="stylesheet">
-<link rel="icon"
-      type="image/png"
-      href="/static/images/logo.png" />
-<title>Kool</title>
-</head>
-    <header>
-    <table style="width:100%">
-      <tr>
-      <th>
-        <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
-      </th>
-      <th colspan="3">
-      <h1>Kool</h1>
-      </th>
-      <th>
-        <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
-      </th>
-      </tr>
-      </table>
-    </header>
-      <body>
           <h2>Add student</h2>
             <form method="post" action="addstudentaction">
               <p>
@@ -176,38 +100,9 @@ addstudent = """
                  <input type="submit" value="Submit">
               </p>
             </form>
-    <footer>
-    <img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-    </footer>
-    </body>
-    </html>
 """
 
 showstudentscore = """
-<html>
-<head>
-<link href="/static/css/style.css" rel="stylesheet">
-<link rel="icon"
-      type="image/png"
-      href="/static/images/logo.png" />
-<title>Kool</title>
-</head>
-    <header>
-    <table style="width:100%">
-      <tr>
-      <th>
-        <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
-      </th>
-      <th colspan="3">
-      <h1>Kool</h1>
-      </th>
-      <th>
-        <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
-      </th>
-      </tr>
-      </table>
-    </header>
-      <body>
           <h2>Show student scores</h2>
             <form method="post" action="showstudentscoreaction">
               <p>
@@ -222,38 +117,9 @@ showstudentscore = """
                  <input type="submit" value="Submit selection">
               </p>
             </form>
-    <footer>
-    <img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-    </footer>
-    </body>
-    </html>
 """
 
 delstudent = """
-<html>
-<head>
-<link href="/static/css/style.css" rel="stylesheet">
-<link rel="icon"
-      type="image/png"
-      href="/static/images/logo.png" />
-<title>Kool</title>
-</head>
-    <header>
-    <table style="width:100%">
-      <tr>
-      <th>
-        <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
-      </th>
-      <th colspan="3">
-      <h1>Kool</h1>
-      </th>
-      <th>
-        <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
-      </th>
-      </tr>
-      </table>
-    </header>
-      <body>
           <h2>Select student record to delete from menu</h2>
             <form method="post" action="delstudentaction">
               <p>
@@ -268,79 +134,21 @@ delstudent = """
                  <input type="submit" value="Submit selection">
               </p>
             </form>
-    <footer>
-    <img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-    </footer>
-    </body>
-    </html>
 """
 
 showmyscores = """
-<html>
-<head>
-<link href="/static/css/style.css" rel="stylesheet">
-<link rel="icon"
-      type="image/png"
-      href="/static/images/logo.png" />
-<title>Kool</title>
-</head>
-    <header>
-    <table style="width:100%">
-      <tr>
-      <th>
-        <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
-      </th>
-      <th colspan="3">
-      <h1>Kool</h1>
-      </th>
-      <th>
-        <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
-      </th>
-      </tr>
-      </table>
-    </header>
-      <body>
           <h2>My quiz scores</h2>
-            <form method="post" action="showmyscoresaction">
+            <form method="post" action="returnstudentaction">
               <p>
                 Placeholder for now - get scores from database and display them
                 </p>
               <p>
-                 <input type="submit" value="Submit">
+                 <input type="submit" value="Return to student options">
               </p>
             </form>
-    <footer>
-    <img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-    </footer>
-    </body>
-    </html>
 """
 
 makequiz = """
-<html>
-<head>
-<link href="/static/css/style.css" rel="stylesheet">
-<link rel="icon"
-      type="image/png"
-      href="/static/images/logo.png" />
-<title>Kool</title>
-</head>
-    <header>
-    <table style="width:100%">
-      <tr>
-      <th>
-        <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
-      </th>
-      <th colspan="3">
-      <h1>Kool</h1>
-      </th>
-      <th>
-        <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
-      </th>
-      </tr>
-      </table>
-    </header>
-      <body>
           <h2>Make quiz</h2>
             <form method="post" action="makequizaction">
               <p>
@@ -353,38 +161,9 @@ makequiz = """
                  <input type="submit" value="Add questions">
               </p>
             </form>
-    <footer>
-    <img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-    </footer>
-    </body>
-    </html>
 """
 
 addquizquestion = """
-<html>
-<head>
-<link href="/static/css/style.css" rel="stylesheet">
-<link rel="icon"
-      type="image/png"
-      href="/static/images/logo.png" />
-<title>Kool</title>
-</head>
-    <header>
-    <table style="width:100%">
-      <tr>
-      <th>
-        <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
-      </th>
-      <th colspan="3">
-      <h1>Kool</h1>
-      </th>
-      <th>
-        <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
-      </th>
-      </tr>
-      </table>
-    </header>
-      <body>
           <h2>Add quiz question - modify to allow insertion of multiple questions</h2>
             <form method="post" action="addquizquestionaction">
               <p>
@@ -397,38 +176,9 @@ addquizquestion = """
                  <input type="submit" value="Add question">
               </p>
             </form>
-    <footer>
-    <img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-    </footer>
-    </body>
-    </html>
 """
 
 choosequiz = """
-<html>
-<head>
-<link href="/static/css/style.css" rel="stylesheet">
-<link rel="icon"
-      type="image/png"
-      href="/static/images/logo.png" />
-<title>Kool</title>
-</head>
-    <header>
-    <table style="width:100%">
-      <tr>
-      <th>
-        <img src="/static/images/logo.png" alt="Kool Logo" style="height:128px;">
-      </th>
-      <th colspan="3">
-      <h1>Kool</h1>
-      </th>
-      <th>
-        <img src="/static/images/TartuLogo.png" alt="University of Tartu Logo" style="height:128px;">
-      </th>
-      </tr>
-      </table>
-    </header>
-      <body>
           <h2>Choose unattempted quiz to take</h2>
             <form method="post" action="choosequizaction">
               <p>
@@ -445,62 +195,129 @@ choosequiz = """
                  <input type="submit" value="Submit">
               </p>
             </form>
-    <footer>
-    <img src="/static/images/TartuMain.jpg" alt="University of Tartu main building" style="height:256px;">
-    </footer>
-    </body>
-    </html>
+"""
+
+quiz = """
+          <h2>Quiz</h2>
+            <form method="post" action="gradequizaction">
+              <p>
+                Question 1<br>
+                  <input type="radio" name="option" value="A">Answer 1<br>
+                  <input type="radio" name="option" value="B">Answer 2<br>
+                  <input type="radio" name="option" value="C">Answer 3<br>
+                </p>
+              <p>
+                 <input type="submit" value="Submit">
+              </p>
+            </form>
+"""
+
+delstudentrecord = """
+          <h2>Succefully deleted student record</h2>
+            <form method="post" action="returneducatoraction">
+                   <input type="submit" value="Return to educator options">
+            </form>
+"""
+
+quizscore = """
+          <h2>Quizscore</h2>
+            <form method="post" action="quizscoreaction">
+              <p>
+                Placeholder, need to add question number<br>
+                  Your answer to question 1 was right/wrong<br>
+                </p>
+              <p>
+                 <input type="submit" value="Next question">
+                 <input type="submit" value="Try again">
+              </p>
+            </form>
 """
 
 class accessdatabase(object):
     @cherrypy.expose
     def index(self):
-        return startpage
+        page = top + startpage + bottom
+        return page
 
     @cherrypy.expose
     def start(self,email,pword,role):
       # check password is correct one for supplied email address
         pwordemail='match'
         if ((pwordemail=='match') & (role=='educator')):
-            return educator
+            page = top + educator + bottom
+            return page
         elif ((pwordemail=='match') & (role=='student')):
-            return student
+            page = top + student + bottom
+            return page
         else:
-            return startpage
+            page = top + startpage + bottom
+            return page
 
     @cherrypy.expose
     def studentaction(self,option):
         if option=='showmyscores':
-            return showmyscores
+            page = top + showmyscores + bottom
+            return page
         else:
-            return choosequiz
+            page = top + choosequiz + bottom
+            return page
 
     @cherrypy.expose
     def educatoraction(self,option):
-        print(option)
         if option=='addstudent':
-            return addstudent
+            page = top + addstudent + bottom
+            return page
         elif option=='delstudent':
-            return delstudent
+            page = top + delstudent + bottom
+            return page
         elif option=='makequiz':
-            return makequiz
+            page = top + makequiz + bottom
+            return page
         elif option=='showstudentscore':
-            return showstudentscore
+            page = top + showstudentscore + bottom
+            return page
         else:
-            return addstudentscore
-
-    @cherrypy.expose
-    def updatestudentscore(self,firstname,lastname,quiz,score):
-        #check firstname, lastname, quiz and score match
-        if options!='match':
-            return addstudent
-        else:
-            return student
+            page = top + addstudentscore + bottom
+            return page
 
     @cherrypy.expose
     def makequizaction(self,qname,options):
     #check firstname, lastname, quiz and score match
-        return addquizquestion
+        page = top + addquizquestion + bottom
+        return page
+
+    @cherrypy.expose
+    def choosequizaction(self,quizchoice):
+    #check firstname, lastname, quiz and score match
+        page = top + quiz + bottom
+        return page
+
+    @cherrypy.expose
+    def gradequizaction(self,option):
+    #check firstname, lastname, quiz and score match
+        page = top + quizscore + bottom
+        return page
+
+    @cherrypy.expose
+    def returnstudentaction(self):
+        page = top + student + bottom
+        return page
+
+    @cherrypy.expose
+    def showstudentscoresaction(self,value):
+        page = top + studentscore + bottom
+        return page
+
+    @cherrypy.expose
+    def delstudentaction(self,value):
+        # delete student from database
+        page = top + delstudent + bottom
+        return page
+
+    @cherrypy.expose
+    def returneducatoraction(self):
+        page = top + educator + bottom
+        return page
 
     @cherrypy.expose
     def addstudentaction(self,fname,lname,email,pword1,pword2):
@@ -525,8 +342,9 @@ class accessdatabase(object):
           'pword2': 'Hidden',
           'match': match
         }
+        page = top + response_body + bottom
         # add entry to flatfile database
-        return response_body
+        return page
 
 
 if __name__ == '__main__':
