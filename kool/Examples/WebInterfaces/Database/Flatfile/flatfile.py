@@ -104,10 +104,10 @@ addstudent = """
 
 showstudentscore = """
           <h2>Show student scores</h2>
-            <form method="post" action="showstudentscoreaction">
+            <form method="post" action="displaystudentscoresaction">
               <p>
                 Placeholder sliding menu for now<br>
-                <select name="studenttodel" size="3">
+                <select name="studenttoshow" size="3">
                  <option value="orenge@ut.ee">Antony Orenge orenge@ut.ee</option>
                  <option value="benson.muite@ut.ee">Benson Muite benson.muite@ut.ee</option>
                  <option value="kira.lurich@ut.ee">Kira Lurich kira.lurich@ut.ee</option>
@@ -121,7 +121,7 @@ showstudentscore = """
 
 delstudent = """
           <h2>Select student record to delete from menu</h2>
-            <form method="post" action="delstudentaction">
+            <form method="post" action="completedelstudentaction">
               <p>
               Placeholder sliding menu for now<br>
               <select name="studenttodel" size="3">
@@ -136,14 +136,79 @@ delstudent = """
             </form>
 """
 
+completedelstudent = """
+          <h2>Record deleted</h2>
+            <form method="post" action="returneducatoraction">
+              <p>
+                   <input type="submit" value="Return to educator options">
+              </p>
+            </form>
+"""
+
 showmyscores = """
           <h2>My quiz scores</h2>
             <form method="post" action="returnstudentaction">
               <p>
                 Placeholder for now - get scores from database and display them
+                <table style="width:100%">
+                <tr>
+                  <th>Quiz</th>
+                  <th>My score</th>
+                  <th>Total Score</th>
+                </tr>
+                <tr>
+                  <td>A</td>
+                  <td>8</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>17</td>
+                  <td>20</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>14</td>
+                  <td>15</td>
+                </tr>
+                </table>
                 </p>
               <p>
                  <input type="submit" value="Return to student options">
+              </p>
+            </form>
+"""
+
+displaystudentscores = """
+          <h2>Student quiz scores</h2>
+            <form method="post" action="returneducatoraction">
+              <p>
+                Placeholder for now - get scores from database and display them
+                <table style="width:100%">
+                <tr>
+                  <th>Quiz</th>
+                  <th>My score</th>
+                  <th>Total Score</th>
+                </tr>
+                <tr>
+                  <td>A</td>
+                  <td>8</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>17</td>
+                  <td>20</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>14</td>
+                  <td>15</td>
+                </tr>
+                </table>
+                </p>
+              <p>
+                 <input type="submit" value="Return to educator options">
               </p>
             </form>
 """
@@ -226,6 +291,7 @@ quizoption = """
 Option text:<br> <input type="text" name="otext">
 <input type="radio" name="option" value="A">Correct answer<br>
 """
+
 quizoptionend = """
   <input type="submit" value="Create quiz">
   </p>
@@ -293,11 +359,8 @@ class accessdatabase(object):
         elif option=='makequiz':
             page = top + makequiz + bottom
             return page
-        elif option=='showstudentscore':
-            page = top + showstudentscore + bottom
-            return page
         else:
-            page = top + addstudentscore + bottom
+            page = top + showstudentscore + bottom
             return page
 
     @cherrypy.expose
@@ -326,7 +389,7 @@ class accessdatabase(object):
         return page
 
     @cherrypy.expose
-    def returnstudentaction(self):
+    def returnstudentaction(self,option):
         page = top + student + bottom
         return page
 
@@ -336,9 +399,20 @@ class accessdatabase(object):
         return page
 
     @cherrypy.expose
-    def delstudentaction(self,value):
+    def displaystudentscoresaction(self,studenttoshow):
+        page = top + displaystudentscores + bottom
+        return page
+
+    @cherrypy.expose
+    def delstudentaction(self,studenttodel):
         # delete student from database
         page = top + delstudent + bottom
+        return page
+    @cherrypy.expose
+
+    def completedelstudentaction(self,studenttodel):
+        # delete student from database
+        page = top + completedelstudent + bottom
         return page
 
     @cherrypy.expose
