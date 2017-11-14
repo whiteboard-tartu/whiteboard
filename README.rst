@@ -10,13 +10,10 @@ Kool
 
 |CircleCI| |codecov| |Documentation Status|
 
-Kool is an open source platform for online classroom management.
+Kool is a microframework for educators to build an online classroom.
 
-The aim is to create a minimalist framework that educationist can extend
-when building an online classroom management system.
-
-The current version supports extending class User, Course, and Quiz. The
-database is a small CSV flatfile implementation.
+The current version supports extending users, quizzes, and courses.
+The default database is a small flatfile implementation.
 
 Getting Started
 ---------------
