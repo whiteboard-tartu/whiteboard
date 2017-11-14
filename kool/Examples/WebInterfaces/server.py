@@ -87,6 +87,12 @@ class Server(object):
         return page
 
     @cherrypy.expose
+    def quiz_created(self, otext, qtext):
+        #put all values in otext and qtext, then reformat to save to database
+        page = t.HEADER + t.QUIZ_CREATED + t.FOOTER
+        return page
+
+    @cherrypy.expose
     def grade_quiz(self, option):
         #check firstname, lastname, quiz and score match
         page = t.HEADER + t.QUIZ_SCORE + t.FOOTER

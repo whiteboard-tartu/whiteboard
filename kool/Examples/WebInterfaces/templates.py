@@ -321,21 +321,21 @@ DISPLAY_STUDENT_SCORES = """
 MAKE_QUIZ = """
 <div class="card">
 <h2>Make quiz</h2>
-<form method="post" action="makequizaction">
+<form method="post" action="make_quiz">
 
   <div class="form-group">
     <label for="qname">New quiz name</label>
-    <input type="text" class="form-control" id="qname" placeholder="">
+    <input type="text" class="form-control" name="qname" id="qname" placeholder="">
   </div>
 
   <div class="form-group">
     <label for="numquestions">Number of questions (1-100)</label>
-    <input type="number" class="form-control" id="numquestions" placeholder="">
+    <input type="number" class="form-control" name="numquestions" id="numquestions" placeholder="">
   </div>
 
   <div class="form-group">
     <label for="numoptions">Multiple choice options per question (1-15)</label>
-    <input type="number" class="form-control" id="numoptions" placeholder="">
+    <input type="number" class="form-control" name="numoptions" id="numoptions" placeholder="">
   </div>
   <br>
 
@@ -345,22 +345,6 @@ MAKE_QUIZ = """
 </div>
 """
 
-ADD_QUIZ_QUESTION = """
-<div class="card">
-<h2>Add quiz question - modify to allow insertion of multiple questions</h2>
-<form method="post" action="addquizquestionaction">
-<p>
-    Question text:<br> <input type="text" name="qtext"><br>
-    option text:<br> <input type="text" name="otext0"><br>
-    option text:<br> <input type="text" name="otext1"><br>
-    Answer:<br> <input type="number" name="answer"><br>
-  </p>
-<p>
-   <input type="submit" value="Add question">
-</p>
-</form>
-</div>
-"""
 
 CHOOSE_QUIZ = """
 <div class="card">
@@ -402,7 +386,7 @@ Question 1<br>
 
 QUIZ_OPTIONS_START = """
 <div class="card">
-<form method="post" action="gradequizaction">
+<form method="post" action="quiz_created">
 """
 
 NEW_QUESTION = """
@@ -423,7 +407,16 @@ QUIZ_OPTIONS_END = """
 DEL_STUDENT_RECORD = """
 <div class="card">
 <h2>Succefully deleted student record</h2>
-<form method="post" action="returneducatoraction">
+<form method="post" action="educator_options">
+     <input type="submit" value="Return to educator options">
+</form>
+</div>
+"""
+
+QUIZ_CREATED = """
+<div class="card">
+<h2>Succefully created quiz</h2>
+<form method="post" action="educator_options">
      <input type="submit" value="Return to educator options">
 </form>
 </div>
