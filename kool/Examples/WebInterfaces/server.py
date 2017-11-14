@@ -69,27 +69,27 @@ class Server(object):
 
     @cherrypy.expose
     def make_quiz(self, qname, numquestions, numoptions):
-        quizoptions = quizoptionstart
+        QUIZ_OPTIONS = t.QUIZ_OPTIONS_START
         for nn in range(0, int(numquestions)):
-            quizoptions = quizoptions + newquestion
+            QUIZ_OPTIONS = QUIZ_OPTIONS + t.NEW_QUESTION
             for n in range(0, int(numoptions)):
-                quizoptions = quizoptions + quizoption
-        quizoptions = quizoptions + quizoptionend
+                QUIZ_OPTIONS = QUIZ_OPTIONS + t.QUIZ_OPTION
+        QUIZ_OPTIONS = QUIZ_OPTIONS + t.QUIZ_OPTIONS_END
 
         #setup forms apporpriately to write to database
-        page = t.HEADER + quizoptions + t.FOOTER
+        page = t.HEADER + QUIZ_OPTIONS + t.FOOTER
         return page
 
     @cherrypy.expose
     def choose_quiz(self, quizchoice):
         #check firstname, lastname, quiz and score match
-        page = t.HEADER + quiz + t.FOOTER
+        page = t.HEADER + t.QUIZ_PAGE + t.FOOTER
         return page
 
     @cherrypy.expose
     def grade_quiz(self, option):
         #check firstname, lastname, quiz and score match
-        page = t.HEADER + quizscore + t.FOOTER
+        page = t.HEADER + t.QUIZ_SCORE + t.FOOTER
         return page
 
     @cherrypy.expose
@@ -103,8 +103,19 @@ class Server(object):
 
     @cherrypy.expose
     def delete_student(self, value):
-        # delete t.STUDENT_FORM from database
+        # choose student to delete from database
         page = t.HEADER + t.DELETE_STUDENT + t.FOOTER
+        return page
+
+    @cherrypy.expose
+    def display_student_scores(self,value):
+            page = t.HEADER + t.DISPLAY_STUDENT_SCORES + t.FOOTER
+            return page
+
+    @cherrypy.expose
+    def complete_delete_student(self,value):
+        # delete t.STUDENT_FORM from database
+        page = t.HEADER + t.COMPLETE_DELETE_STUDENT + t.FOOTER
         return page
 
     @cherrypy.expose
@@ -119,20 +130,20 @@ class Server(object):
         lname = escape(lname)
         email = escape(email)
         pword1 = escape(pword1)
-        pword2 = escape(pword2)        
+        pword2 = escape(pword2)
         match = ''
 
         if pword1 != pword2:
             match = 'Passwords do not match, enter again'
 
         if not match:
-          response_body = t.SHOW_STUDENT.format( 
+          response_body = t.SHOW_STUDENT.format(
             fname or 'No entry',
             lname or 'No entry',
             email or 'No entry',
           )
           return t.HEADER + t.NAVBAR + t.START_CONTAINER + response_body + t.END_CONTAINER + t.FOOTER
-        else: 
+        else:
           response_body = t.ERROR_MSG.format(match)
           return t.HEADER + t.NAVBAR + t.START_CONTAINER + response_body + t.ADD_STUDENT + t.END_CONTAINER + t.FOOTER
 

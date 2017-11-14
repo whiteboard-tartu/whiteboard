@@ -49,7 +49,7 @@ FOOTER = """
 LOGIN_FORM = """
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-6"> 
+    <div class="col-md-6">
     <div id="login" class="card">
     <h2>Login</h2>
     <form method="post" action="start">
@@ -126,7 +126,7 @@ STUDENT_FORM = """
 <div class="card">
 <h2>Choose an option</h2>
 <form method="post" action="student">
-  
+
   <div class="form-check">
     <label class="form-check-label">
       <input type="radio" class="form-check-input" name="option" value="show_my_scores" checked>
@@ -140,7 +140,7 @@ STUDENT_FORM = """
       Take quiz
     </label>
   </div>
-  
+
   <br>
 
   <input type="submit" value="Submit" class="btn btn-success">
@@ -198,17 +198,17 @@ SHOW_STUDENT = """
 SHOW_STUDENT_SCORES = """
 <div class="card">
 <h2>Show student scores</h2>
-<form method="post" action="show_student_score">
-  
+<form method="post" action="display_student_scores">
+
   <div class="form-group">
-    <select name="studenttodel" size="3">
+    <select name="value" size="3">
      <option value="orenge@ut.ee">Antony Orenge orenge@ut.ee</option>
      <option value="benson.muite@ut.ee">Benson Muite benson.muite@ut.ee</option>
      <option value="kira.lurich@ut.ee">Kira Lurich kira.lurich@ut.ee</option>
     </select>
     </p>
   <div>
-  
+
   <br>
   <input type="submit" value="Submit" class="btn btn-success">
 
@@ -219,10 +219,10 @@ SHOW_STUDENT_SCORES = """
 DELETE_STUDENT = """
 <div class="card">
 <h2>Select student record to delete from menu</h2>
-<form method="post" action="delstudentaction">  
+<form method="post" action="complete_delete_student">
 
 <div class="form-group">
-  <select name="studenttodel" size="3">
+  <select name="value" size="3">
     <option value="orenge@ut.ee">Antony Orenge orenge@ut.ee</option>
     <option value="benson.muite@ut.ee">Benson Muite benson.muite@ut.ee</option>
     <option value="kira.lurich@ut.ee">Kira Lurich kira.lurich@ut.ee</option>
@@ -234,18 +234,88 @@ DELETE_STUDENT = """
 </div>
 """
 
+COMPLETE_DELETE_STUDENT = """
+<div class="card">
+<h2>Record deleted</h2>
+    <form method="post" action="/">
+    <p>
+        <input type="submit" value="Return" class="btn btn-default">
+    </p>
+    </form>
+</div>
+"""
+
 SHOW_MY_SCORE = """
 <div class="card">
 <h2>My quiz scores</h2>
 <form method="post" action="/">
   <p>
     Placeholder for now - get scores from database and display them
+    <table style="width:100%">
+    <tr>
+      <th>Quiz</th>
+      <th>My score</th>
+      <th>Total Score</th>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>8</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>B</td>
+      <td>17</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <td>D</td>
+      <td>14</td>
+      <td>15</td>
+    </tr>
+    </table>
+    </p>
     </p>
   <p>
      <input type="submit" value="Return" class="btn btn-default">
   </p>
 </form>
 </div>
+"""
+
+DISPLAY_STUDENT_SCORES = """
+         <div class="card">
+          <h2>Student quiz scores</h2>
+            <form method="post" action="/">
+              <p>
+                Placeholder for now - get scores from database and display them
+                <table style="width:100%">
+                <tr>
+                  <th>Quiz</th>
+                  <th>My score</th>
+                  <th>Total Score</th>
+                </tr>
+                <tr>
+                  <td>A</td>
+                  <td>8</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>17</td>
+                  <td>20</td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>14</td>
+                  <td>15</td>
+                </tr>
+                </table>
+                </p>
+              <p>
+                 <input type="submit" value="Return" class="btn btn-default">
+              </p>
+            </form>
+            </div>
 """
 
 MAKE_QUIZ = """
@@ -295,7 +365,7 @@ ADD_QUIZ_QUESTION = """
 CHOOSE_QUIZ = """
 <div class="card">
 <h2>Choose unattempted quiz to take</h2>
-  <form method="post" action="choosequizaction">
+  <form method="post" action="choose_quiz">
     <p>
       Placeholder sliding menu for now<br>
         <select name="quizchoice" size="5">
@@ -310,13 +380,13 @@ CHOOSE_QUIZ = """
        <input type="submit" value="Submit" class="btn btn-success">
     </p>
   </form>
-</div>  
+</div>
 """
 
 QUIZ_PAGE = """
 <div class="card">
 <h2>Quiz</h2>
-<form method="post" action="gradequizaction">
+<form method="post" action="grade_quiz">
 <p>
 Question 1<br>
   <input type="radio" name="option" value="A">Answer 1<br>
@@ -343,6 +413,7 @@ QUIZ_OPTION = """
 Option text:<br> <input type="text" name="otext">
 <input type="radio" name="option" value="A">Correct answer<br>
 """
+
 QUIZ_OPTIONS_END = """
   <input type="submit" value="Create quiz">
 </form>
